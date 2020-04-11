@@ -50,4 +50,4 @@ class Parser:
 
     @staticmethod
     def get_supported_fields():
-        return Parser().supported_fields()
+        return Parser().supported_fields

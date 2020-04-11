@@ -38,6 +38,5 @@ class Client:
             snapshot_dict = MessageToDict(snapshot, including_default_value_fields=True)
             # filtered = filter_json(snapshot_dict, supported_fields)
             filtered = snapshot_dict
-            snapshot_bson = BSON({**user_dict, **filtered})
-            print(snapshot_bson.encode())
-            self.__send_message('snapshot',snapshot_bson.encode() , 'POST')
+            snapshot_bson = BSON.encode({**user_dict, **filtered})
+            self.__send_message('snapshot',snapshot_bson , 'POST')
