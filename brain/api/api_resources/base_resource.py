@@ -1,6 +1,6 @@
 from flask_restful import Resource
 
-from utils import consts
+from brain.utils import consts
 
 
 class BaseResource(Resource):

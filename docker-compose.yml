@@ -19,12 +19,12 @@ services:
     build: .
     ports:
       - 8000:8000
-    command: ./wait-for.sh rabbitmq:5672 -- python -m brain.server --queue rabbitmq://rabbitmq:5672 --host 0.0.0.0 --port 8000
+    command: ./wait-for-it.sh rabbitmq:5672 -- python -m brain.server run-server --queue rabbitmq://rabbitmq:5672 --host 0.0.0.0 --port 8000
     depends_on:
       - rabbitmq
   saver:
     image: brain:latest
-    command: ./wait-for.sh mongodb:27017 -- ./wait-for.sh rabbitmq:5672 -- python -m brain.saver run-saver --queue rabbitmq://rabbitmq:5672 --database mongodb://brain:brain@mongodb:27017
+    command: ./wait-for-it.sh mongodb:27017 -- ./wait-for-it.sh rabbitmq:5672 -- python -m brain.saver run-saver --queue rabbitmq://rabbitmq:5672 --database mongodb://brain:brain@mongodb:27017
     depends_on:
       - server
       - rabbitmq
@@ -33,25 +33,25 @@ services:
     image: brain:latest
     ports:
     - 5000:5000
-    command: ./wait-for.sh mongodb:27017 -- python -m brain.api --host 0.0.0.0 --port 5000 --database mongodb://brain:brain@mongodb:27017
+    command: ./wait-for-it.sh mongodb:27017 -- python -m brain.api run-server --host 0.0.0.0 --port 5000 --database mongodb://brain:brain@mongodb:27017
     depends_on:
       - server
       - mongodb
   parser_user:
     image: brain:latest
-    command: ./wait-for.sh rabbitmq:5672 -- python -m brain.parser run-parser user mongodb://brain:brain@mongodb:27017
+    command: ./wait-for-it.sh rabbitmq:5672 -- python -m brain.parsers run-parser user rabbitmq://rabbitmq:5672
     depends_on:
       - server
       - rabbitmq
   parser_pose:
     image: brain:latest
-    command: ./wait-for.sh rabbitmq:5672 -- python -m brain.parser run-parser pose mongodb://brain:brain@mongodb:27017
+    command: ./wait-for-it.sh rabbitmq:5672 -- python -m brain.parsers run-parser pose rabbitmq://rabbitmq:5672
     depends_on:
       - server
       - rabbitmq
   parser_feelings:
     image: brain:latest
-    command: ./wait-for.sh rabbitmq:5672 -- python -m brain.parser run-parser feelings mongodb://brain:brain@mongodb:27017
+    command: ./wait-for-it.sh rabbitmq:5672 -- python -m brain.parsers run-parser feelings rabbitmq://rabbitmq:5672
     depends_on:
       - server
       - rabbitmq
