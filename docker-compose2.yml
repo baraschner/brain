@@ -1,0 +1,27 @@
+version: '3.5'
+networks:
+  internal:
+    driver: bridge
+services:
+  mongodb:
+    image: mongo:latest
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: brain
+      MONGO_INITDB_ROOT_PASSWORD: brain
+    networks:
+      - internal
+  rabbitmq:
+    image: rabbitmq
+    networks:
+      - internal
+  server:
+    image: brain:latest
+    command: ./wait-for.sh rabbitmq:5672 -- python -m brain.server --url rabbitmq://rabbitmq:5672 --address 0.0.0.0:8000
+    networks:
+      - internal
+    ports:
+    - "8000:8080"
+    depends_on:
+      - rabbitmq
+
+

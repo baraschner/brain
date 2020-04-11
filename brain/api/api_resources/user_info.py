@@ -1,0 +1,11 @@
+from api.api_resources.base_resource import BaseResource
+from utils import consts
+from bson.json_util import dumps
+
+
+class UserInfo(BaseResource):
+    url = '/users/<int:user_id>'
+
+    def get(self, user_id):
+        user_info = self.db_connection.users.find({consts.USER_ID: user_id})
+        return dumps(user_info)
