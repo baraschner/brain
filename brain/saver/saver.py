@@ -15,9 +15,9 @@ class Saver:
         if db_type != 'mongodb':
             raise Exception('DB not Supported!')
 
-    def __init__(self, db_url, queue_url=None):
-        self.get_db_info_from_url(db_url)
-        self.client = MongoClient(db_url)
+    def __init__(self, database_url, queue_url=None):
+        self.get_db_info_from_url(database_url)
+        self.client = MongoClient(database_url)
         if queue_url is not None:
             self.queue = build_queue_connection_from_url(queue_url)
 

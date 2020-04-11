@@ -1,12 +1,11 @@
 import fire
 
 from brain.utils import consts
-from .api import *
+from .api import run_api_server
 
 
-def run_server(address="127.0.0.1:5000", url=consts.MONGODB_DEFAULT_URL):
-    addr = address.split(":")
-    run(addr[0], addr[1], url)
+def run_server(host=consts.LOCALHOST, port=consts.DEFAULT_API_PORT, database=consts.MONGODB_DEFAULT_URL):
+    run_api_server(host, port, database)
 
 
 if __name__ == '__main__':

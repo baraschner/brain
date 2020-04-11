@@ -5,10 +5,11 @@ from pymongo import MongoClient
 from brain.utils import flask_tools
 
 
-def run(host, port, url):
+def run_api_server(host, port, database_url):
     app = Flask(__name__)
     api = Api(app)
-    db_connection = MongoClient(url)
+    db_connection = MongoClient(database_url)
     flask_tools.api_driver(api, __file__, db_connection)
 
     app.run(host=host, port=port)
+
