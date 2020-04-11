@@ -11,6 +11,15 @@ from brain.parsers import Parser
 
 
 def run_server(host, port, queue_url, publish=None):
+    """
+    runs the server. the server can either publish to a queue or get a publish function
+
+    :param host: ip to bind
+    :param port: port to bind
+    :param queue_url: url of message queue
+    :param publish: public function, None if using queue
+    :return:
+    """
     app = Flask(__name__)
     logger = logging.getLogger()
     app.logger = logger
