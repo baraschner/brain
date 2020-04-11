@@ -1,6 +1,6 @@
 import gzip
 
-from brain.utils import pb_objects
+# from brain.utils import pb_objects
 
 
 class Reader:
@@ -8,9 +8,9 @@ class Reader:
         self.file = file
         self.pos = 0
         self.snapshots = None
-        self.user = pb_objects.User()
-        self.__read_object(self.user)
-        print(self.user)
+        # self.user = pb_objects.User()
+        # self.__read_object(self.user)
+        # print(self.user)
 
     def __read_object(self, obj_to_init):
         obj_to_init.Clear()

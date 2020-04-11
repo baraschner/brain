@@ -30,7 +30,7 @@ def get_snapshot(user_id, snapshot_id, host=consts.LOCALHOST, port=consts.DEFAUL
     output(result, save)
 
 
-def get_result(user_id, snapshot_id, result, host, port, save=Noneu):
+def get_result(user_id, snapshot_id, result, host, port, save=None):
     result = requests.get(f'http://{host}:{port}/users/{user_id}/snapshots/{snapshot_id}/{result}')
     output(result, save)
 
