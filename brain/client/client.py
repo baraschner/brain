@@ -9,9 +9,9 @@ from brain.utils import consts
 
 
 class Client:
-    def __init__(self, address, file):
+    def __init__(self, host,port, file):
         self.file = file
-        self.address = address
+        self.address = f'{host}:{port}'
 
     def __send_message(self, url, message=None, method='GET'):
         url = f'http://{self.address}/{url}'

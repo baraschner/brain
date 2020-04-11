@@ -7,8 +7,8 @@ from .client import Client
 @click.option('--address', default="127.0.0.1:8000",
               help='Server address in [HOST]:[PORT] format. Default is 127.0.0.1:8000')
 @click.option('--file', help='Thought filename', required=True)
-def upload_cli(address, file):
-    client = Client(address, file)
+def upload_cli(host,port, file):
+    client = Client(host,port, file)
     client.upload()
 
 

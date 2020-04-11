@@ -11,8 +11,8 @@ def save(field, filename, db=consts.MONGODB_DEFAULT_URL):
     saver.save(field, data)
 
 
-def run_saver(db_url=consts.MONGODB_DEFAULT_URL, queue_url="rabbitmq://127.0.0.1:5672"):
-    saver = Saver(db_url, queue_url)
+def run_saver(database=consts.MONGODB_DEFAULT_URL, queue=consts.RABBIT_DEFAULT_URL):
+    saver = Saver(database, queue)
     saver.run()
 
 

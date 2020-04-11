@@ -1,67 +1,60 @@
 version: '3.5'
-networks:
-  internal:
-    driver: bridge
 services:
   mongodb:
     image: mongo:latest
+    ports:
+      - 27017:27017
     environment:
       MONGO_INITDB_ROOT_USERNAME: brain
       MONGO_INITDB_ROOT_PASSWORD: brain
-    networks:
-      - internal
+    volumes:
+      - mongodb_volume:/data/db
   rabbitmq:
-    image: rabbitmq
-    networks:
-      - internal
+    image: rabbitmq:management
+    ports:
+      - 5672:5672
+      - 15672:15672
   server:
     image: brain:latest
-    command: ./wait-for.sh rabbitmq:5672 -- python -m brain.server --url rabbitmq://rabbitmq:5672 --address 0.0.0.0:8000
-    networks:
-      - internal
+    build: .
     ports:
-    - "8000:8080"
+      - 8000:8000
+    command: ./wait-for.sh rabbitmq:5672 -- python -m brain.server --queue rabbitmq://rabbitmq:5672 --host 0.0.0.0 --port 8000
     depends_on:
       - rabbitmq
-      - parser_feelings
-      - parser_pose
-      - parser_user
   saver:
     image: brain:latest
-    command: ./wait-for.sh mongodb:27017 -- python -m brain.saver run-saver --queue_url rabbitmq://rabbitmq:5672 --db_url mongodb://brain:brain@mongodb:27017
+    command: ./wait-for.sh mongodb:27017 -- ./wait-for.sh rabbitmq:5672 -- python -m brain.saver run-saver --queue rabbitmq://rabbitmq:5672 --database mongodb://brain:brain@mongodb:27017
     depends_on:
+      - server
       - rabbitmq
       - mongodb
-    networks:
-      - internal
   api:
     image: brain:latest
-    command: ./wait-for.sh mongodb:27017 -- python -m brain.api --address 0.0.0.0:5000 --url mongodb://brain:brain@mongodb:27017
-    networks:
-      - internal
     ports:
-      - "5000:5000"
+    - 5000:5000
+    command: ./wait-for.sh mongodb:27017 -- python -m brain.api --host 0.0.0.0 --port 5000 --database mongodb://brain:brain@mongodb:27017
+    depends_on:
+      - server
+      - mongodb
   parser_user:
     image: brain:latest
     command: ./wait-for.sh rabbitmq:5672 -- python -m brain.parser run-parser user mongodb://brain:brain@mongodb:27017
-    networks:
-      - internal
     depends_on:
+      - server
       - rabbitmq
-      - saver
   parser_pose:
     image: brain:latest
     command: ./wait-for.sh rabbitmq:5672 -- python -m brain.parser run-parser pose mongodb://brain:brain@mongodb:27017
-    networks:
-      - internal
     depends_on:
+      - server
       - rabbitmq
-      - saver
   parser_feelings:
     image: brain:latest
     command: ./wait-for.sh rabbitmq:5672 -- python -m brain.parser run-parser feelings mongodb://brain:brain@mongodb:27017
-    networks:
-      - internal
     depends_on:
+      - server
       - rabbitmq
-      - saver
+
+volumes:
+  mongodb_volume:
