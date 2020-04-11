@@ -10,15 +10,16 @@ from brain.utils import consts
 from brain.parsers import Parser
 
 
-def run(host, port, url):
+def run_server(host, port, queue_url, publish=None):
     app = Flask(__name__)
     logger = logging.getLogger()
     app.logger = logger
     api = Api(app)
+    queue = None
 
-
-    queue = build_queue_connection_from_url(url)
-    queue.exchange_declare(consts.PARSER_INPUT_EXCHANGE_NAME, 'fanout')
+    if queue_url is not None:
+        queue = build_queue_connection_from_url(queue_url)
+        queue.exchange_declare(consts.PARSER_INPUT_EXCHANGE_NAME, 'fanout')
 
     @api.resource('/config')
     class Hello(Resource):
@@ -30,6 +31,9 @@ def run(host, port, url):
     class Snapshot(Resource):
         def post(self):
             data = BSON.decode(request.get_data())
-            queue.publish(consts.PARSER_INPUT_EXCHANGE_NAME, json.dumps(data))
+            if queue is not None:
+                queue.publish(consts.PARSER_INPUT_EXCHANGE_NAME, json.dumps(data))
+            else:
+                publish(json.dumps(data))
 
     app.run(host=host, port=port)
