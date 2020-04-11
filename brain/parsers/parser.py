@@ -6,8 +6,6 @@ import sys
 
 from brain.utils import build_queue_connection_from_url, consts
 
-FIELD = 'field'
-
 
 class Parser:
     def __init__(self, field=None):
@@ -27,11 +25,11 @@ class Parser:
                 self.add_parser(item)
 
     def add_parser(self, obj):
-        if inspect.isclass(obj) and 'parse' in obj.__dict__ and FIELD in obj.__dict__:
+        if inspect.isclass(obj) and 'parse' in obj.__dict__ and consts.FIELD in obj.__dict__:
             self.supported_fields.append(obj.field)
             if obj.field == self.field:
                 self.parser = obj().parse
-        elif inspect.isfunction(obj) and FIELD in obj.__dict__:
+        elif inspect.isfunction(obj) and consts.FIELD in obj.__dict__:
             self.supported_fields.append(obj.field)
             if obj.field == self.field:
                 self.parser = obj
