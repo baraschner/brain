@@ -15,11 +15,9 @@ class Parser:
         self.initialize_parsers()
 
     def initialize_parsers(self):
-        root = pathlib.Path(__file__).absolute().parent
+        root = pathlib.Path(__file__).absolute().parent/'fields'
         sys.path.insert(0, str(root.parent))
         for path in root.iterdir():
-            if path.name in ['__init__.py', 'context.py', 'parser.py']:
-                continue
             module = importlib.import_module(f'{root.name}.{path.stem}', package=root.name).__dict__
             for item in module.values():
                 self.add_parser(item)
