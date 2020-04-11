@@ -10,7 +10,7 @@ FIELD = 'field'
 
 
 class Parser:
-    def __init__(self, field):
+    def __init__(self, field=None):
         self.field = field
         self.parser = None
         self.supported_fields = []
@@ -49,3 +49,7 @@ class Parser:
 
         connection.anonymous_queue_declare_and_bind(consts.PARSER_INPUT_EXCHANGE_NAME, on_message)
         connection.start_consuming()
+
+    @staticmethod
+    def get_supported_fields():
+        return Parser().supported_fields()

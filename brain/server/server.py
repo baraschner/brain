@@ -6,6 +6,7 @@ from flask_restful import Resource, Api
 from brain.protocol import HelloResponse
 from brain.utils import build_queue_connection_from_url
 from brain.utils import consts
+from brain.parsers import Parser
 
 
 def run(host, port, url):
@@ -18,7 +19,7 @@ def run(host, port, url):
     @api.resource('/config')
     class Hello(Resource):
         def get(self):
-            hello_response = HelloResponse([])
+            hello_response = HelloResponse(Parser.get_supported_fields())
             return hello_response.to_json()
 
     @api.resource('/snapshot')

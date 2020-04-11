@@ -30,8 +30,9 @@ class Saver:
             user_id = data[consts.USER_ID]
             return db.users.update_one({consts.USER_ID: {'$eq': user_id}}, {'$set': data}, upsert=True)
         header = json_data[consts.HEADER]
-        return db.snapshots.update_one({consts.USER_ID:header[consts.USER_ID],consts.DATETIME:header[consts.DATETIME]}, {'$set': {topic: data}},
-                                       upsert=True)
+        return db.snapshots.update_one(
+            {consts.USER_ID: header[consts.USER_ID], consts.DATETIME: header[consts.DATETIME]}, {'$set': {topic: data}},
+            upsert=True)
 
     def saver_callback(self):
         def on_message(ch, method, properties, body):
