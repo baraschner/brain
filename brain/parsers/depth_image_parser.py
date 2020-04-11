@@ -3,7 +3,7 @@ import numpy as np
 
 
 class ColorImageParser:
-    field = 'depth_image'
+    field = 'color_image'
 
     def __init__(self):
         pass

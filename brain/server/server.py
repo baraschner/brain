@@ -28,4 +28,5 @@ def run(host, port, url):
             data = request.get_json()
             queue.publish(consts.PARSER_INPUT_EXCHANGE_NAME, json.dumps(data))
 
+
     app.run(host=host, port=port)

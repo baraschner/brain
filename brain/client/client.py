@@ -1,9 +1,9 @@
 import json
-
+from bson import BSON
 import requests
 from google.protobuf.json_format import MessageToDict
-
 from brain.client.parsers import ProtobufParser
+
 from brain.utils import User
 from brain.utils import consts
 
@@ -19,7 +19,7 @@ class Client:
         if method == 'GET':
             http_response = requests.get(url)
         else:
-            http_response = requests.post(url, json=message)
+            http_response = requests.post(url, data=message)
 
         if http_response.status_code != 200:
             raise ValueError("Protocol Error")
@@ -38,4 +38,6 @@ class Client:
             snapshot_dict = MessageToDict(snapshot, including_default_value_fields=True)
             # filtered = filter_json(snapshot_dict, supported_fields)
             filtered = snapshot_dict
-            self.__send_message('snapshot', {**user_dict, **filtered}, 'POST')
+            snapshot_bson = BSON({**user_dict, **filtered})
+            print(snapshot_bson.encode())
+            self.__send_message('snapshot',snapshot_bson.encode() , 'POST')
