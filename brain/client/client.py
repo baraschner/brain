@@ -14,6 +14,14 @@ class Client:
         self.address = f'{host}:{port}'
 
     def __send_message(self, url, message=None, method='GET'):
+        """
+        Send a message to a server
+
+        :param url: url of server
+        :param message: message to send, in case using post
+        :param method: http method, default is get
+        :return:
+        """
         url = f'http://{self.address}/{url}'
 
         if method == 'GET':
@@ -27,6 +35,10 @@ class Client:
             return http_response
 
     def upload(self):
+        """
+        Upload the snapshot file to the server
+        :return:
+        """
         parser = ProtobufParser(self.file)
         hello_response = json.loads(self.__send_message('config').json())
         user = parser.read_object(User())
