@@ -20,8 +20,10 @@ class RabbitMQConnector:
     """
     Connector class that supports RabbitMQ
     """
+
     def __init__(self, host, port):
-        self.con = pika.BlockingConnection(pika.ConnectionParameters(host=host, port=port,heartbeat=600,blocked_connection_timeout=300))
+        params = pika.ConnectionParameters(host=host, port=port, heartbeat=600, blocked_connection_timeout=300)
+        self.con = pika.BlockingConnection(params)
         self.channel = self.con.channel()
         self.queue = None
 
