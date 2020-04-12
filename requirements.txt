@@ -37,7 +37,7 @@ numpy==1.18.2
 orderedmultidict==1.0.1
 packaging==19.2
 pika==1.1.0
-Pillow==6.2.1
+Pillow==6.2.2
 pipreqs==0.4.10
 pluggy==0.13.0
 protobuf==3.11.2

@@ -1,17 +1,22 @@
-from brain.utils import consts
-from brain.cli import *
-
+from pytest import fixture
 import pathlib
 from json import dumps
-from io import StringIO
 
+from brain.api import run_api_server
+_SERVER_HOST = "127.0.0.1"
+_SERVER_PORT = 5000
 _SERVER_URL = "http://127.0.0.1:5000"
-_SERVER_PATH = pathlib.Path(__file__).absolute().parent.parent / 'server.py'
+_DB_URL = 'mongodb://127.0.0.1:5000'
 _SNAPSHOT_ID = "ID"
 _FIELD = "FIELD"
 _USER_ID = 1337
 _RESULT_PRINT = '42\n'
 _RESULT = 42
+
+'''
+@fixture
+def start_api_server():
+    run_api_server(_SERVER_HOST,_SERVER_PORT,'mongodb://127.0.0.1')
 
 
 def test_get_users(requests_mock,capsys):
@@ -48,3 +53,4 @@ def test_result(requests_mock, capsys):
     captured = capsys.readouterr()
     assert captured.out == _RESULT_PRINT
 
+'''
