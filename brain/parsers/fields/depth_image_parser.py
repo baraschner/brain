@@ -1,7 +1,7 @@
-import matplotlib.pyplot as plt
-import numpy as np
+#import matplotlib.pyplot as plt
+#import numpy as np
 
-
+'''
 class ColorImageParser:
     field = 'color_image'
 
@@ -13,4 +13,5 @@ class ColorImageParser:
         depth_image = data['depthImage']
         data = np.array(depth_image['data']).reshape((depth_image['height'], depth_image['width']))
         plt.imsave(path, data)
+'''
 
