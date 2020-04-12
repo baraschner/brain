@@ -17,10 +17,17 @@ def parse(field, snapshot_file):
 
 
 def run_parser(field, data):
+    """
+    parse data according to specific field and return the result
+
+    :param field: field to parse
+    :param data: data to parse
+    :return: result of parser
+    """
     return Parser(field).parser(data)
 
 
-def run_queue_parser(field, queue_url):
+def run_queue_parser(field, queue):
     """
     run parser as server that consumes a queue.
     :param field: field to parse
