@@ -9,9 +9,10 @@ from brain.utils import consts
 
 
 class Client:
-    def __init__(self, host,port, file):
+    def __init__(self, host, port, file, test=False):
         self.file = file
         self.address = f'{host}:{port}'
+        self.test = test
 
     def __send_message(self, url, message=None, method='GET'):
         """
@@ -34,21 +35,33 @@ class Client:
         else:
             return http_response
 
+    def _send_snapshot(self, user_dict, snapshot):
+        """
+        upload a single snapshot to the server
+
+        :param user_dict: a dictionary that contains the user information
+        :param snapshot: a dictionary that contains the snapshot to upload
+        :return:
+        """
+        snapshot_dict = MessageToDict(snapshot, including_default_value_fields=True)
+        # filtered = filter_json(snapshot_dict, supported_fields)
+        filtered = snapshot_dict
+        snapshot_bson = BSON.encode({**user_dict, **filtered})
+        self.__send_message('snapshot', snapshot_bson, 'POST')
+
     def upload(self):
         """
-        Upload the snapshot file to the server
+        Upload the entire sample file to the server
         :return:
         """
         parser = ProtobufParser(self.file)
         hello_response = json.loads(self.__send_message('config').json())
         user = parser.read_object(User())
         user_dict = MessageToDict(user, including_default_value_fields=True)
-        user_dict[consts.USER_ID] = int(user_dict[consts.USER_ID]) # this is since protobuf doesn't preserver int64
+        user_dict[consts.USER_ID] = int(user_dict[consts.USER_ID])  # this is since protobuf doesn't preserver int64
 
         supported_fields = hello_response['supported_fields']
         for snapshot in parser:
-            snapshot_dict = MessageToDict(snapshot, including_default_value_fields=True)
-            # filtered = filter_json(snapshot_dict, supported_fields)
-            filtered = snapshot_dict
-            snapshot_bson = BSON.encode({**user_dict, **filtered})
-            self.__send_message('snapshot',snapshot_bson , 'POST')
+            self._send_snapshot(user_dict, snapshot)
+            if self.test:  # in testing, send just a single snapshot
+                break

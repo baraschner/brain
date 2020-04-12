@@ -1,3 +1,2 @@
-from .hello_request import HelloRequest
-from .hello_response import HelloResponse
+from .config_response import ConfigResponse
 from .snapshot_message import SnapshotMessage
