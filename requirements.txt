@@ -13,6 +13,7 @@ codecov==2.0.22
 configparser==4.0.2
 coverage==5.0.4
 cycler==0.10.0
+docopt==0.6.2
 docutils==0.15.2
 Events==0.3
 fire==0.3.0
@@ -27,12 +28,15 @@ itsdangerous==1.1.0
 Jinja2==2.10.3
 kiwisolver==1.1.0
 MarkupSafe==1.1.1
+matplotlib==3.2.1
 minio==5.0.7
 more-itertools==7.2.0
+numpy==1.18.2
 orderedmultidict==1.0.1
 packaging==19.2
 pika==1.1.0
 Pillow==6.2.1
+pipreqs==0.4.10
 pluggy==0.13.0
 protobuf==3.11.2
 protobuf3==0.2.1
@@ -50,6 +54,7 @@ six==1.12.0
 snowballstemmer==2.0.0
 soupsieve==1.9.5
 Sphinx==2.3.1
+sphinx-bootstrap-theme==0.7.1
 sphinxcontrib-applehelp==1.0.1
 sphinxcontrib-devhelp==1.0.1
 sphinxcontrib-htmlhelp==1.0.2
@@ -59,6 +64,8 @@ sphinxcontrib-serializinghtml==1.1.3
 sqlparse==0.3.0
 termcolor==1.1.0
 urllib3==1.25.6
+virtualenv==16.7.7
 wcwidth==0.1.7
 Werkzeug==0.16.0
+yarg==0.1.9
 zipp==0.6.0
