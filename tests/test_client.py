@@ -1,6 +1,4 @@
 from brain.utils import consts
-from brain.protocol import ConfigResponse
-from brain.client.client import Client
 from brain.client import upload_sample
 
 from pathlib import Path
