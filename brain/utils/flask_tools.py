@@ -8,11 +8,12 @@ from brain.utils import consts
 
 def api_driver(api, path, resource_class_arg=None):
     """
-    This function initializes the api automatically according to their endpoint field
+    initializes an api dynamically according to their endpoint field
+
     :param path: the path from which to load the modules
     :param resource_class_arg: a parameter that will be provided to class constructors
     :param api: flask api to which endpoints will be added
-    :return: void
+    :return:
     """
     root = pathlib.Path(path).parent.absolute() / consts.API_RESOURCES_MODULE_PATH
     sys.path.insert(0, str(root))

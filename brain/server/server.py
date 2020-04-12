@@ -47,7 +47,6 @@ def run_server(host, port, queue_url, publish=None):
         def post(self):
             """
             Recieve Snapshot and either pass the result to queue or publish function
-            :return:
             """
             data = BSON.decode(request.get_data())
             if queue is not None:
