@@ -30,6 +30,7 @@ def run_parser(field, data):
 def run_queue_parser(field, queue):
     """
     run parser as server that consumes a queue.
+
     :param field: field to parse
     :param queue: url of message queue
     :return:
