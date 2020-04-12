@@ -22,6 +22,12 @@ class Saver:
             self.queue = build_queue_connection_from_url(queue_url)
 
     def save(self, topic, data):
+        """
+        save data in the db
+        :param topic: topic of the data
+        :param data: data to be saved
+        :return:
+        """
         db = self.client[consts.DB_NAME]
         json_data = json.loads(data)
         data = json_data[consts.DATA]
