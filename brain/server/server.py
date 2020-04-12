@@ -31,14 +31,24 @@ def run_server(host, port, queue_url, publish=None):
         queue.exchange_declare(consts.PARSER_INPUT_EXCHANGE_NAME, 'fanout')
 
     @api.resource('/config')
-    class Hello(Resource):
+    class Config(Resource):
+        """
+        Config Messages in which the client gets the supported fields
+        """
         def get(self):
             hello_response = HelloResponse(Parser.get_supported_fields())
             return hello_response.to_json()
 
     @api.resource('/snapshot')
     class Snapshot(Resource):
+        """
+        Snapshot Messages in which the client uploads the snapshot
+        """
         def post(self):
+            """
+            Recieve Snapshot and either pass the result to queue or publish function
+            :return:
+            """
             data = BSON.decode(request.get_data())
             if queue is not None:
                 queue.publish(consts.PARSER_INPUT_EXCHANGE_NAME, json.dumps(data))

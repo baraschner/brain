@@ -17,6 +17,9 @@ def build_queue_connection_from_url(url):
 
 
 class RabbitMQConnector:
+    """
+    Connector class that supports RabbitMQ
+    """
     def __init__(self, host, port):
         self.con = pika.BlockingConnection(pika.ConnectionParameters(host=host, port=port))
         self.channel = self.con.channel()
@@ -29,9 +32,20 @@ class RabbitMQConnector:
         self.channel.basic_publish(exchange=exchange, routing_key=routing_key, body=data)
 
     def anonymous_queue_declare_and_bind(self, exchange_name, callback, routing_key=''):
+        """
+        Creates anonymous queue, binds it to an exchange and registers a callback
+        :param exchange_name:
+        :param callback:
+        :param routing_key:
+        :return:
+        """
         self.queue = self.channel.queue_declare(queue='', exclusive=True).method.queue
         self.channel.queue_bind(exchange=exchange_name, queue=self.queue, routing_key=routing_key)
         self.channel.basic_consume(queue=self.queue, on_message_callback=callback, auto_ack=True)
 
     def start_consuming(self):
+        """
+        Start consuming messages from the registered queue.
+        :return:
+        """
         self.channel.start_consuming()
