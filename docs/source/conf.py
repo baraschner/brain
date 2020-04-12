@@ -12,7 +12,6 @@
 #
 import os
 import sys
-#import sphinx_bootstrap_theme
 import sphinx_material
 sys.path.insert(0, os.path.abspath('../../'))
 
@@ -53,3 +52,26 @@ html_context = sphinx_material.get_html_context()
 # relative to this directory. They are copied after the builtin static files,
 # so a file named "default.css" will overwrite the builtin "default.css".
 html_static_path = []
+
+# Theme Options
+# Material theme options (see theme.conf for more information)
+html_theme_options = {
+
+    # Set the name of the project to appear in the navigation.
+    'nav_title': 'Brain',
+
+    # Set the color and the accent color
+    'color_primary': 'blue',
+    'color_accent': 'light-blue',
+
+    # Set the repo location to get a badge with stats
+    'repo_url': 'https://github.com/baraschner/brain',
+    'repo_name': 'brain',
+
+    # Visible levels of the global TOC; -1 means unlimited
+    'globaltoc_depth': 3,
+    # If False, expand all TOC entries
+    'globaltoc_collapse': False,
+    # If True, show hidden TOC entries
+    'globaltoc_includehidden': False,
+}
