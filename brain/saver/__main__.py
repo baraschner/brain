@@ -23,8 +23,8 @@ def run_saver(database=consts.MONGODB_DEFAULT_URL, queue=consts.RABBIT_DEFAULT_U
     """
     run saver as a server that consumes data from a queue
 
-    :param database:
-    :param queue:
+    :param database: url of database
+    :param queue: url of queue
     :return:
     """
     saver = Saver(database, queue)
