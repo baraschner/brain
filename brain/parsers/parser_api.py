@@ -35,4 +35,4 @@ def run_queue_parser(field, queue):
     :return:
     """
     parser = Parser(field)
-    parser.queue_parse(queue_url)
+    parser.queue_parse(queue)
