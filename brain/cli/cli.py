@@ -11,27 +11,27 @@ def output(data, save):
 
 
 def get_users(host=consts.LOCALHOST, port=consts.DEFAULT_API_PORT, save=None):
-    result = requests.get(f'http://{host}:{port}/users')
+    result = requests.get(f'http://{host}:{port}/users').json()
     output(result, save)
 
 
 def get_user(user_id, host=consts.LOCALHOST, port=consts.DEFAULT_API_PORT, save=None):
-    result = requests.get(f'http://{host}:{port}/users/{user_id}')
+    result = requests.get(f'http://{host}:{port}/users/{user_id}').json()
     output(result, save)
 
 
 def get_snapshots(user_id, host=consts.LOCALHOST, port=consts.DEFAULT_API_PORT, save=None):
-    result = requests.get(f'http://{host}:{port}/users/{user_id}/snapshots')
+    result = requests.get(f'http://{host}:{port}/users/{user_id}/snapshots').json()
     output(result, save)
 
 
 def get_snapshot(user_id, snapshot_id, host=consts.LOCALHOST, port=consts.DEFAULT_API_PORT, save=None):
-    result = requests.get(f'http://{host}:{port}/users/{user_id}/snapshots/{snapshot_id}')
+    result = requests.get(f'http://{host}:{port}/users/{user_id}/snapshots/{snapshot_id}').json()
     output(result, save)
 
 
 def get_result(user_id, snapshot_id, result, host=consts.LOCALHOST, port=consts.DEFAULT_API_PORT, save=None):
-    result = requests.get(f'http://{host}:{port}/users/{user_id}/snapshots/{snapshot_id}/{result}')
+    result = requests.get(f'http://{host}:{port}/users/{user_id}/snapshots/{snapshot_id}/{result}').json()
     output(result, save)
 
 

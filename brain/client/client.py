@@ -35,9 +35,12 @@ class Client:
         else:
             return http_response
 
-    def _send_snapshot(self, user_dict, snapshot):
+    def _send_snapshot(self, user_dict, snapshot, supported_fields):
+
         """
         upload a single snapshot to the server
+
+
 
         :param user_dict: a dictionary that contains the user information
         :param snapshot: a dictionary that contains the snapshot to upload
@@ -62,6 +65,6 @@ class Client:
 
         supported_fields = hello_response['supported_fields']
         for snapshot in parser:
-            self._send_snapshot(user_dict, snapshot)
+            self._send_snapshot(user_dict, snapshot,supported_fields)
             if self.test:  # in testing, send just a single snapshot
                 break
