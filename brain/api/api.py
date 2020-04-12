@@ -8,6 +8,7 @@ from brain.utils import flask_tools
 def run_api_server(host, port, database_url):
     """
     Runs the api server
+
     :param host: ip to bind
     :param port: port to bind
     :param database_url: url of database from which the api will get the data
