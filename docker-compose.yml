@@ -9,6 +9,7 @@ services:
       MONGO_INITDB_ROOT_PASSWORD: brain
     volumes:
       - mongodb_volume:/data/db
+      - binary_data:/brain_data
   rabbitmq:
     image: rabbitmq:management
     ports:
@@ -19,6 +20,8 @@ services:
     build: .
     ports:
       - 8000:8000
+    volumes:
+      - binary_data:/brain_data
     command: ./wait-for-it.sh rabbitmq:5672 -- python -m brain.server run-server --queue rabbitmq://rabbitmq:5672 --host 0.0.0.0 --port 8000
     depends_on:
       - rabbitmq
@@ -31,6 +34,8 @@ services:
       - mongodb
   api:
     image: brain:latest
+    volumes:
+      - binary_data:/brain_data
     ports:
     - 5000:5000
     command: ./wait-for-it.sh mongodb:27017 -- python -m brain.api run-server --host 0.0.0.0 --port 5000 --database mongodb://brain:brain@mongodb:27017
@@ -58,3 +63,4 @@ services:
 
 volumes:
   mongodb_volume:
+  binary_data:

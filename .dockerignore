@@ -1,0 +1,12 @@
+.git
+.env
+.idea
+.pytest_cache
+__pycache__
+*.pyc
+*.pyo
+*.pyd
+*.MD
+.Python
+docs
+tests
