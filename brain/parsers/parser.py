@@ -8,11 +8,11 @@ from brain.utils import build_queue_connection_from_url, consts
 
 
 class Parser:
-    def __init__(self, field=None , binary=False, context = None):
+    def __init__(self, field=None, binary=False, context=None):
         self.field = field
         self.parser = None
         self.supported_fields = []
-        self.initialize_parsers(binary,context)
+        self.initialize_parsers()
 
     def initialize_parsers(self):
         root = pathlib.Path(__file__).absolute().parent/'fields'

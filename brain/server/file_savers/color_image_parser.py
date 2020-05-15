@@ -3,7 +3,7 @@ import base64
 
 from PIL import Image as PIL
 
-def parse_color_image(self, data,context):
+def parse_color_image(data,context):
     path = context.path('color_image.jpg')
     size = data['colorImage']['width'], data['colorImage']['height']
     image = PIL.new('RGB', size)
