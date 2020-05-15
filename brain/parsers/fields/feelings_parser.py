@@ -3,4 +3,3 @@ def parse_feelings(data):
 
 
 parse_feelings.field = 'feelings'
-parse_feelings.field_type = 'regular'

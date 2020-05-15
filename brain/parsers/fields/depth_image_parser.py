@@ -1,16 +1,13 @@
-'''
+
 import matplotlib.pyplot as plt
 import numpy as np
 
 
-class ColorImageParser:
-    field = 'color_image'
+def parse_color_image(self, data, context):
+    return data['colorImage']
 
 
-    def color_image_parser(self, data):
-        path = self.context.path('depth_image.jpg')
-        depth_image = data['depthImage']
-        data = np.array(depth_image['data']).reshape((depth_image['height'], depth_image['width']))
-        plt.imsave(path, data)
+parse_color_image.field = 'colorImage'
 
-'''
+
+
