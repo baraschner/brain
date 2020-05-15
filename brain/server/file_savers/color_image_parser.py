@@ -9,8 +9,9 @@ def parse_color_image(self, data,context):
     image = PIL.new('RGB', size)
     raw_data = base64.b64decode(data['colorImage']['data'])
     image.putdata([(raw_data[i], raw_data[i + 1], raw_data[i + 2]) for i in range(0, len(raw_data), 3)])
+    data['colorImage'] = str(path)
     image.save(path)
 
-    parse_color_image.field = 'color_image'
+    parse_color_image.field = 'colorImage'
     parse_color_image.field_type = 'binary'
 

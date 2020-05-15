@@ -60,7 +60,7 @@ def run_server(host, port, queue_url, publish=None):
 
             parse_color_image(data,context)
             parse_depth_image(data,context)
-            remaining_data = filter_json(data,binary_fields)
+
             if queue is not None:
                 queue.publish(consts.PARSER_INPUT_EXCHANGE_NAME, json.dumps(data))
             else:
