@@ -6,6 +6,7 @@ setup(
     author='Bar Aschner',
     description='Project for advanced system design course.',
     packages=find_packages(),
-    install_requires=['click', 'flask'],
-    tests_require=['pytest', 'pytest-cov'],
+    install_requires=['pymongo', 'flask_restful', 'fire', 'requests', 'protobuf', 'numpy', 'matplotlib', 'furl',
+                      'Pillow', 'pika'],
+    tests_require=['pytest', 'pytest-cov', 'mongomock'],
 )
