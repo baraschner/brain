@@ -60,6 +60,22 @@ services:
     depends_on:
       - server
       - rabbitmq
+  parser_depth_image:
+    image: brain:latest
+    command: ./wait-for-it.sh rabbitmq:5672 -- python -m brain.parsers run-parser depthImage rabbitmq://rabbitmq:5672
+    depends_on:
+      - server
+      - rabbitmq
+    volumes:
+      - binary_data:/brain_data
+  parser_color_image:
+    image: brain:latest
+    command: ./wait-for-it.sh rabbitmq:5672 -- python -m brain.parsers run-parser colorImage rabbitmq://rabbitmq:5672
+    depends_on:
+      - server
+      - rabbitmq
+    volumes:
+      - binary_data:/brain_data
 
 volumes:
   mongodb_volume:

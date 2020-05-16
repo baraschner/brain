@@ -10,7 +10,7 @@ from brain.utils import consts, Context, filter_json
 from brain.parsers import Parser
 from brain.utils import Context
 
-from .file_savers import *
+from .processors import *
 
 
 def run_server(host, port, queue_url, publish=None):
@@ -58,8 +58,8 @@ def run_server(host, port, queue_url, publish=None):
             date = datetime.fromtimestamp(int(data[consts.DATETIME]) / 1000)
             context = Context(base_save_path, user_id, date)
 
-            parse_color_image(data, context)
-            parse_depth_image(data, context)
+            process_color_image(data, context)
+            process_depth_image(data, context)
 
             if queue is not None:
                 queue.publish(consts.PARSER_INPUT_EXCHANGE_NAME, json.dumps(data))

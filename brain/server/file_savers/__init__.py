@@ -1,2 +1,0 @@
-from .color_image_parser import parse_color_image
-from .depth_image_parser import parse_depth_image
