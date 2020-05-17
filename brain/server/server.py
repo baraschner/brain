@@ -29,11 +29,12 @@ def run_server(host, port, queue_url, publish=None):
 
     base_save_path = consts.SAVE_PATH
     processor = Processor()
-    queue = None
 
     if queue_url is not None:
         queue = build_queue_connection_from_url(queue_url)
         queue.exchange_declare(consts.PARSER_INPUT_EXCHANGE_NAME, 'fanout')
+    else:
+        queue = None
 
     @api.resource('/config')
     class Config(Resource):
