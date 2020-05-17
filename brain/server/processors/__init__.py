@@ -1,2 +1,2 @@
-from .color_image_parser import process_color_image
-from .depth_image_parser import process_depth_image
+from .color_image_processor import process_color_image
+from .depth_image_processor import process_depth_image

@@ -6,9 +6,8 @@ from bson import BSON
 from datetime import datetime
 
 from brain.utils import build_queue_connection_from_url
-from brain.utils import consts, Context, filter_json
+from brain.utils import consts, Context
 from brain.parsers import Parser
-from brain.utils import Context
 
 from .processors import *
 
