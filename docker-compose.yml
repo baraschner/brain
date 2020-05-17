@@ -40,7 +40,6 @@ services:
     - 5000:5000
     command: ./wait-for-it.sh mongodb:27017 -- python -m brain.api run-server --host 0.0.0.0 --port 5000 --database mongodb://brain:brain@mongodb:27017
     depends_on:
-      - server
       - mongodb
   parser_user:
     image: brain:latest
