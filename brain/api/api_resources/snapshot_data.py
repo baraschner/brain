@@ -16,5 +16,5 @@ class SnapshotFieldData(BaseResource):
             content = f.read()
 
         response = flask.make_response(content)
-        response.headers['content-type'] = info['content-type']
+        response.headers['content-type'] = info[field_name]['content-type']
         return response
