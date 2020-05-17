@@ -18,13 +18,13 @@ class Processor:
             module = importlib.import_module(f'{root.name}.{path.stem}', package=root.name).__dict__
             for obj in module.values():
                 if inspect.isclass(obj) and 'process' in obj.__dict__ and consts.FIELD in obj.__dict__:
-                    self.processors[obj.field] = obj().parse
+                    self.processors[obj.field] = obj().process
                 elif inspect.isfunction(obj) and consts.FIELD in obj.__dict__:
-                    self.processors[obj.field] = obj().parse
+                    self.processors[obj.field] = obj
 
     def process_data(self, data, context):
         for field, processor in self.processors():
             try:
-                processor(data)
+                processor(data, context)
             except Exception:
                 pass
