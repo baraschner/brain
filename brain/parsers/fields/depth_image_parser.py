@@ -17,7 +17,7 @@ def parse_depth_image(data):
     formatted_data = np.array(depth_image).reshape((height, width))
     plt.imsave(path, formatted_data)
 
-    result = {'path': path, 'type': 'image/jpg'}
+    result = {'path': path, 'content-type': 'image/jpg'}
     return result
 
 
