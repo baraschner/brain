@@ -20,6 +20,8 @@ def parse_color_image(data):
 
     image.save(path)
 
-    return data['colorImage']['path']
+    result = {'path': path, 'content-type': 'image/jpg'}
+    return result
+
 
 parse_color_image.field = 'colorImage'

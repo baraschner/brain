@@ -12,9 +12,9 @@ class SnapshotFieldData(BaseResource):
         info = self.db_connection.snapshots.find_one({consts.USER_ID: user_id, '_id': ObjectId(snapshot_id)},
                                                      {field_name: 1})
 
-        with open(info[field_name], 'rb') as f:
+        with open(info[field_name]['path'], 'rb') as f:
             content = f.read()
 
         response = flask.make_response(content)
-        response.headers['content-type'] = "image/jpg"
+        response.headers['content-type'] = info['content-type']
         return response
