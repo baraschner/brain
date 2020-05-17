@@ -9,4 +9,4 @@ class AllUsers(BaseResource):
     def get(self):
         all_users = self.db_connection.users.find({},
                                                   {'username': 1, consts.USER_ID: 1, '_id': 0})
-        return dumps(all_users)
+        return list(all_users)

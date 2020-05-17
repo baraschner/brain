@@ -7,5 +7,5 @@ class UserInfo(BaseResource):
     url = '/users/<int:user_id>'
 
     def get(self, user_id):
-        user_info = self.db_connection.users.find({consts.USER_ID: user_id},{'_id':0})
-        return dumps(user_info)
+        user_info = self.db_connection.users.find_one({consts.USER_ID: user_id}, {'_id': 0})
+        return user_info
