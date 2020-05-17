@@ -16,8 +16,9 @@ def run_api_server(host, port, database_url):
     :return:
     """
     app = Flask(__name__)
-    api = Api(app)
-    db_connection = MongoClient(database_url)
-    flask_tools.api_driver(api, __file__, db_connection)  # automatically initializes api from api_resources
+
+    # automatically initializes api from api_resources
+    flask_tools.api_driver(Api(app), __file__, (MongoClient(database_url),))
     CORS(app)
+
     app.run(host=host, port=port)

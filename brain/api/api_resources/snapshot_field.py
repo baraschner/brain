@@ -10,4 +10,4 @@ class SnapshotField(BaseResource):
     def get(self, user_id, snapshot_id, field_name):
         field_info = self.db_connection.snapshots.find_one({consts.USER_ID: user_id, '_id': ObjectId(snapshot_id)},
                                                            {field_name: 1, '_id': 0})
-        return field_info
+        return field_info[field_name]
