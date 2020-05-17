@@ -23,7 +23,7 @@ class Processor:
                     self.processors[obj.field] = obj
 
     def process_data(self, data, context):
-        for field, processor in self.processors():
+        for field, processor in self.processors:
             try:
                 processor(data, context)
             except Exception:
