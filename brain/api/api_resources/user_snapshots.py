@@ -1,4 +1,4 @@
-from bson.json_util import dumps
+import bson
 from brain.api.api_resources.base_resource import BaseResource
 from brain.utils import consts
 
@@ -9,4 +9,12 @@ class UserSnapshots(BaseResource):
     def get(self, user_id):
         find_key = {consts.USER_ID: user_id}
         snapshots = self.db_connection.snapshots.find(find_key, {consts.DATETIME: 1})
-        return dumps(snapshots)
+
+        result = []
+
+        for snapshot in snapshots:
+            snapshot['_id'] = str(snapshot['_id'])
+            result += snapshot
+
+
+        return result
