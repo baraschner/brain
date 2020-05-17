@@ -1,4 +1,5 @@
 from flask import Flask
+from flask_cors import CORS
 from flask_restful import Api
 from pymongo import MongoClient
 
@@ -18,5 +19,5 @@ def run_api_server(host, port, database_url):
     api = Api(app)
     db_connection = MongoClient(database_url)
     flask_tools.api_driver(api, __file__, db_connection)  # automatically initializes api from api_resources
-
+    CORS(app)
     app.run(host=host, port=port)
