@@ -1,2 +1,1 @@
-from .color_image_processor import process_color_image
-from .depth_image_processor import process_depth_image
+from .processor import Processor

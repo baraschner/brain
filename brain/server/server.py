@@ -9,7 +9,7 @@ from brain.utils import build_queue_connection_from_url
 from brain.utils import consts, Context
 from brain.parsers import Parser
 
-from .processors import *
+from .processors import Processor
 
 
 def run_server(host, port, queue_url, publish=None):
@@ -24,9 +24,11 @@ def run_server(host, port, queue_url, publish=None):
     """
     app = Flask(__name__)
     logger = logging.getLogger()
-    base_save_path = consts.SAVE_PATH
     app.logger = logger
     api = Api(app)
+
+    base_save_path = consts.SAVE_PATH
+    processor = Processor()
     queue = None
 
     if queue_url is not None:
@@ -57,8 +59,8 @@ def run_server(host, port, queue_url, publish=None):
             date = datetime.fromtimestamp(int(data[consts.DATETIME]) / 1000)
             context = Context(base_save_path, user_id, date)
 
-            process_color_image(data, context)
-            process_depth_image(data, context)
+            processor.process_data(data,context)
+
 
             if queue is not None:
                 queue.publish(consts.PARSER_INPUT_EXCHANGE_NAME, json.dumps(data))
