@@ -16,5 +16,4 @@ class UserSnapshots(BaseResource):
             snapshot['_id'] = str(snapshot['_id'])
             result += snapshot
 
-
         return result
