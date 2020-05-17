@@ -13,7 +13,7 @@ class Processor:
         self.initialize_processors()
 
     def initialize_processors(self):
-        root = pathlib.Path(__file__).absolute().parent / 'processors'
+        root = pathlib.Path(__file__).absolute().parent '
         sys.path.insert(0, str(root.parent))
         for path in root.iterdir():
             module = importlib.import_module(f'{root.name}.{path.stem}', package=root.name).__dict__
