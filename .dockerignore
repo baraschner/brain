@@ -10,3 +10,5 @@ __pycache__
 .Python
 docs
 tests
+**/node_modules
+**/build

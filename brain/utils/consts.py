@@ -17,6 +17,7 @@ API_RESOURCES_MODULE_PATH = 'api_resources'
 URL_FIELD = 'url'
 LOCALHOST = '127.0.0.1'
 DEFAULT_API_PORT = 5000
+DEFAULT_UI_PORT = 8080
 TIMESTAMP = 'timestamp'
 POSE = 'pose'
 COLOR_IMAGE = 'colorImage'

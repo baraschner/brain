@@ -75,6 +75,14 @@ services:
       - rabbitmq
     volumes:
       - binary_data:/brain_data
+  ui:
+    image: brain:latest
+    ports:
+    - 8080:8080
+    command: ./wait-for-it.sh api:5000 -- python -m brain.ui run-server --host 0.0.0.0 --api_host api
+    depends_on:
+      - server
+      - api
 
 volumes:
   mongodb_volume:
