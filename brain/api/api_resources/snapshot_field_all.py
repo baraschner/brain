@@ -5,7 +5,7 @@ from brain.utils import consts
 class SnapshotFieldAll(BaseResource):
     """
         Returns all the info of a specific field in all snapshots of of a specific user.
-        The results are sorted by timestamp.
+        The results are in the form (timestamp, value) and sorted according to timestamp.
     """
     url = '/users/<int:user_id>/all/<string:field_name>'
 
@@ -13,4 +13,4 @@ class SnapshotFieldAll(BaseResource):
         all_info = self.db_connection.snapshots.find({consts.USER_ID: user_id},
                                                      {field_name: 1, '_id': 0, consts.DATETIME: 1})
 
-        return sorted(all_info, key=lambda x: x[consts.DATETIME])
+        return [(x[consts.DATETIME],x[field_name]) for x in sorted(all_info, key=lambda x: x[consts.DATETIME])]
