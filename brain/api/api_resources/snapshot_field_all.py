@@ -12,5 +12,5 @@ class SnapshotFieldAll(BaseResource):
     def get(self, user_id, field_name):
         all_info = self.db_connection.snapshots.find({consts.USER_ID: user_id},
                                                      {field_name: 1, '_id': 0, consts.DATETIME: 1})
-
-        return [(x[consts.DATETIME],x[field_name]) for x in sorted(all_info, key=lambda x: x[consts.DATETIME])]
+        sorted_info = sorted(all_info, key=lambda x: x[consts.DATETIME])
+        return sorted_info
