@@ -1,5 +1,6 @@
 import json
 
+
 def process_color_image(data, context):
     path = context.path('color_image.jpg')
 

@@ -5,6 +5,10 @@ from brain.utils import consts
 
 
 class SnapshotField(BaseResource):
+    """
+    Returns the value of a field in a specific snapshot.
+    """
+
     url = '/users/<int:user_id>/snapshots/<string:snapshot_id>/<string:field_name>'
 
     def get(self, user_id, snapshot_id, field_name):

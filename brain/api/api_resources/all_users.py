@@ -4,6 +4,9 @@ from bson.json_util import dumps
 
 
 class AllUsers(BaseResource):
+    """
+    Returns all users.
+    """
     url = '/users'
 
     def get(self):

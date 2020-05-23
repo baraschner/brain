@@ -5,6 +5,11 @@ from brain.utils import consts
 
 
 class SnapshotDetails(BaseResource):
+    """
+
+    Returns information about the available fields in a user's snapshot.
+
+    """
     url = '/users/<int:user_id>/snapshots/<string:snapshot_id>'
 
     def get(self, user_id, snapshot_id):
@@ -14,4 +19,4 @@ class SnapshotDetails(BaseResource):
         snapshot.pop('userId')
         datetime = snapshot.pop('datetime')
 
-        return {'_id': snapshot_id, 'datetime': datetime, 'available results': list(snapshot.keys())}
+        return {'_id': snapshot_id, 'datetime': datetime, 'available fields': list(snapshot.keys())}
