@@ -5,6 +5,7 @@ from brain.utils import consts
 class SnapshotFieldAll(BaseResource):
     """
         Returns all the info of a specific field in all snapshots of of a specific user.
+        The results are sorted by timestamp.
     """
     url = '/users/<int:user_id>/all/<string:field_name>'
 
