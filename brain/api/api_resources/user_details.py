@@ -4,6 +4,10 @@ from bson.json_util import dumps
 
 
 class UserInfo(BaseResource):
+    """
+    Returns details about the a user.
+    """
+
     url = '/users/<int:user_id>'
 
     def get(self, user_id):

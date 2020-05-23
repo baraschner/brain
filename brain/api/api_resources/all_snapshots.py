@@ -1,9 +1,11 @@
-import bson
 from brain.api.api_resources.base_resource import BaseResource
 from brain.utils import consts
 
 
 class UserSnapshots(BaseResource):
+    """
+    Returns the id and timestamp of the available snapshots.
+    """
     url = '/users/<int:user_id>/snapshots'
 
     def get(self, user_id):

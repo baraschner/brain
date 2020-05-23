@@ -6,6 +6,9 @@ from brain.utils import consts
 
 
 class SnapshotFieldData(BaseResource):
+    """
+    Get the data of binary fields.
+    """
     url = '/users/<int:user_id>/snapshots/<string:snapshot_id>/<string:field_name>/data'
 
     def get(self, user_id, snapshot_id, field_name):
