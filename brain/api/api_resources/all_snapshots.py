@@ -16,6 +16,7 @@ class UserSnapshots(BaseResource):
 
         for snapshot in snapshots:
             snapshot['id'] = str(snapshot['_id'])
+            del snapshot['_id']
             result.append(snapshot)
 
         return result

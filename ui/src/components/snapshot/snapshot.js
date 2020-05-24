@@ -23,7 +23,7 @@ class Snapshot extends React.Component {
 
     getSnapshotId(){
         let snap = this.state.all_snapshots[this.state.index];
-        return snap["_id"]
+        return snap.id
     }
 
 
