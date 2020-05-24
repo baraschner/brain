@@ -76,12 +76,14 @@ services:
     volumes:
       - binary_data:/brain_data
   ui:
-    image: brain:latest
+    image: brain-ui:latest
+    build:
+      context: .
+      dockerfile: ui.Dockerfile
     ports:
     - 8080:8080
     command: ./wait-for-it.sh api:5000 -- python -m brain.ui run-server --host 0.0.0.0 --api_host api
     depends_on:
-      - server
       - api
 
 volumes:
