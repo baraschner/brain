@@ -15,21 +15,18 @@ class Snapshot extends React.Component {
         this.state = {
             current_snapshot_id: '5ebff198c6431f04cfe8e46b',
             all_snapshots: [],
-            loaded: false
+            loaded: false,
+            index:0
         };
-        this.update_snapshot_id = this.update_snapshot_id.bind(this)
+        this.getSnapshotId = this.getSnapshotId.bind(this)
     }
 
-    update_snapshot_id(time) {
-        this.state.all_snapshots.forEach((snapshot) => {
-                if (snapshot.time === time) {
-                    this.setState({current_snapshot_id: snapshot._id})
-
-                }
-            }
-        )
-
+    getSnapshotId(){
+        let snap = this.state.all_snapshots[this.state.index];
+        return snap["_id"]
     }
+
+
 
     render_snapshot() {
         return (
@@ -37,7 +34,7 @@ class Snapshot extends React.Component {
                 <CardContent>
                     <Typography variant='h5'>Snapshot</Typography>
                     <Feelings userId={this.props.userId}  />
-                    <SnapshotImages userId={this.props.userId} snapshotId={this.state.current_snapshot_id}/>
+                    <SnapshotImages userId={this.props.userId} snapshotId={this.getSnapshotId()}/>
                     <Pose userId={this.props.userId} snapshotId={this.state.current_snapshot_id}/>
                 </CardContent>
                 <CardActions>

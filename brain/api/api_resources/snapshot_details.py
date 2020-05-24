@@ -15,8 +15,8 @@ class SnapshotDetails(BaseResource):
     def get(self, user_id, snapshot_id):
         snapshot = self.db_connection.snapshots.find_one({consts.USER_ID: user_id, '_id': ObjectId(snapshot_id)})
 
-        snapshot.pop('_id')
-        snapshot.pop('userId')
+        del snapshot['_id']
+        del snapshot['userId']
         datetime = snapshot.pop('datetime')
 
-        return {'_id': snapshot_id, 'datetime': datetime, 'available fields': list(snapshot.keys())}
+        return {'id': snapshot_id, 'datetime': datetime, 'available fields': list(snapshot.keys())}
