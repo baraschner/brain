@@ -15,7 +15,6 @@ class SnapshotImages extends React.Component {
 
     componentDidMount() {
         fetch(`${window.apisrv}/users/${this.props.userId}/snapshots/${this.props.snapshotId}/colorImage/data`)
-            .then(response => response.json())
             .then(data => this.setState({feelings: data}));
     };
 

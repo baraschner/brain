@@ -3,7 +3,12 @@ import Typography from '@material-ui/core/Typography';
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
+import IconButton from '@material-ui/core/IconButton';
 import Button from '@material-ui/core/Button';
+
+import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
+import ChevronRightIcon from '@material-ui/icons/ChevronRight';
+
 import Feelings from './feelings';
 import SnapshotImages from './snapshot_images';
 import Pose from './pose';
@@ -26,8 +31,18 @@ class Snapshot extends React.Component {
             return this.state.current_snapshot_id;
         }
 
-        let snap = this.state.all_snapshots[this.state.index];
-        return snap.id;
+        return this.state.all_snapshots[this.state.index].id;
+    }
+
+    updateSnapshotId(add) {
+        if (this.state.index == null) {
+            return;
+        }
+
+        this.setState(prevState => ({
+            index: (prevState.index + add) % this.state.all_snapshots.length
+        }));
+
     }
 
 
@@ -43,6 +58,14 @@ class Snapshot extends React.Component {
                     <SnapshotImages userId={this.props.userId} snapshotId={this.getSnapshotId()}/>
                     <Pose userId={this.props.userId} snapshotId={this.getSnapshotId()}/>
                 </CardContent>
+                <CardActions>
+                    <IconButton onClick={this.updateSnapshotId.bind(this, 1)}>
+                        <ChevronLeftIcon/>
+                    </IconButton>
+                    <IconButton onClick={this.updateSnapshotId.bind(this, 1)}>
+                        <ChevronRightIcon/>
+                    </IconButton>
+                </CardActions>
                 <CardActions>
                     <Button color="secondary" variant="contained" onClick={this.props.close}>Close</Button>
                 </CardActions>
