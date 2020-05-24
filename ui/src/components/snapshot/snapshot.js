@@ -14,41 +14,40 @@ class Snapshot extends React.Component {
         super(props);
         this.state = {
             current_snapshot_id: '5ebff198c6431f04cfe8e46b',
-            all_snapshots: [],
+            all_snapshots: null,
             loaded: false,
-            index:0
+            index: 0
         };
         this.getSnapshotId = this.getSnapshotId.bind(this)
     }
 
-    getSnapshotId(){
+    getSnapshotId() {
+        if (this.state.all_snapshots == null) {
+            return this.state.current_snapshot_id;
+        }
+
         let snap = this.state.all_snapshots[this.state.index];
-        return snap.id
+        return snap.id;
     }
 
 
-
-    render_snapshot() {
+    render() {
+        if (this.state.all_snapshots === []) {
+            return 'loading...';
+        }
         return (
             <Card>
                 <CardContent>
                     <Typography variant='h5'>Snapshot</Typography>
-                    <Feelings userId={this.props.userId}  />
+                    <Feelings userId={this.props.userId}/>
                     <SnapshotImages userId={this.props.userId} snapshotId={this.getSnapshotId()}/>
-                    <Pose userId={this.props.userId} snapshotId={this.state.current_snapshot_id}/>
+                    <Pose userId={this.props.userId} snapshotId={this.getSnapshotId()}/>
                 </CardContent>
                 <CardActions>
                     <Button color="secondary" variant="contained" onClick={this.props.close}>Close</Button>
                 </CardActions>
             </Card>
         )
-    }
-
-    render() {
-        if (this.state.all_snapshots == null) {
-            return 'loading';
-        }
-        return this.render_snapshot()
     }
 
     componentDidMount() {
