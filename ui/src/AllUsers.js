@@ -47,15 +47,12 @@ class AllUsers extends React.Component {
                 }
                 <Modal open={this.state.displaySnapshot}
                        onClose={this.close_snapshot}
-                       closeAfterTransition
-                       BackdropComponent={Backdrop}
-                       BackdropProps={{
-                           timeout: 1000,
-                       }}>
-                    <Fade in={this.state.displaySnapshot}>
+
+                       >
+
                         <Snapshot userId={this.state.displayUserId} close={this.close_snapshot}/>
 
-                    </Fade>
+
                 </Modal>
             </React.Fragment>
         );

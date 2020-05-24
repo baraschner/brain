@@ -8,29 +8,45 @@ class Pose extends React.Component {
         super(props);
         this.state = {
             pose: null,
+            loaded: false
+
         };
     }
 
-    componentDidMount() {
+    fetch_data() {
         fetch(`${window.apisrv}/users/${this.props.userId}/snapshots/${this.props.snapshotId}/pose`)
             .then(response => response.json())
-            .then(data => this.setState({pose: data}));
+            .then(data => this.setState({pose: data, loaded: true}));
+
+    }
+
+    componentDidMount() {
+
+        this.fetch_data()
+
     };
 
+    componentDidUpdate(prevProps, prevState) {
+        if (prevProps.snapshotId != this.props.snapshotId) {
+            this.fetch_data()
+        }
+    }
+
+
     render() {
-        if (this.state.pose == null) {
-            return `${window.apisrv}/users/${this.props.userId}/snapshots/${this.props.snapshotId}/feelings`
+        if (!this.state.loaded) {
+            return 'loading...';
         }
         return (
-                <Card>
-                    <CardContent><Typography>Pose</Typography></CardContent>
-                    <CardContent><Typography>Rotation</Typography>
-                        ({this.state.pose.translation.x},{this.state.pose.translation.y},{this.state.pose.translation.z})
-                    </CardContent>
-                    <CardContent><Typography>Translation</Typography>
-                        ({this.state.pose.rotation.x},{this.state.pose.rotation.y},{this.state.pose.rotation.z})
-                    </CardContent>
-                </Card>
+            <Card>
+                <CardContent><Typography>Pose</Typography></CardContent>
+                <CardContent><Typography>Rotation</Typography>
+                    ({this.state.pose.translation.x},{this.state.pose.translation.y},{this.state.pose.translation.z})
+                </CardContent>
+                <CardContent><Typography>Translation</Typography>
+                    ({this.state.pose.rotation.x},{this.state.pose.rotation.y},{this.state.pose.rotation.z})
+                </CardContent>
+            </Card>
         );
     }
 
