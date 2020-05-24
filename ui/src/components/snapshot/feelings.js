@@ -52,7 +52,7 @@ class Feelings extends React.Component {
                         return moment(parseInt(t)).format('HH:mm:ss');
                     }} />
                     <Legend/>
-                    <Line type="monotone" dataKey="hunger" stroke="#ffcc66" dot={false} onMouseMove={this.props.update_snapshot_id}/>
+                    <Line type="monotone" dataKey="hunger" stroke="#ffcc66" dot={false} />
                     <Line type="monotone" dataKey="thirst" stroke="#82ca11" dot={false}/>
                     <Line type="monotone" dataKey="exhaustion" dot={false}/>
                     <Line type="monotone" dataKey="happiness" stroke="#720025" dot={false}/>

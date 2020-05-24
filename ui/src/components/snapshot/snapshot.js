@@ -36,7 +36,7 @@ class Snapshot extends React.Component {
             <Card>
                 <CardContent>
                     <Typography variant='h5'>Snapshot</Typography>
-                    <Feelings userId={this.props.userId} update={this.update_snapshot_id} />
+                    <Feelings userId={this.props.userId}  />
                     <SnapshotImages userId={this.props.userId} snapshotId={this.state.current_snapshot_id}/>
                     <Pose userId={this.props.userId} snapshotId={this.state.current_snapshot_id}/>
                 </CardContent>
