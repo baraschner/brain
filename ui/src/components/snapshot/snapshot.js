@@ -1,4 +1,7 @@
+import moment from "moment";
+
 import React from 'react';
+
 import Typography from '@material-ui/core/Typography';
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
@@ -19,16 +22,16 @@ import FastRewindIcon from '@material-ui/icons/FastRewind';
 
 
 class Snapshot extends React.Component {
+
     constructor(props) {
         super(props);
         this.state = {
-            current_snapshot_id: '5ebff198c6431f04cfe8e46b',
             all_snapshots: null,
             loaded: false,
             index: 0,
-            speeds: [1, 1.2, 1.4, 1.6, 1.8, 2],
             speed_index: 0
         };
+        this.speeds = [1, 1.2, 1.4, 1.6, 1.8, 2]
         this.getSnapshotId = this.getSnapshotId.bind(this)
         this.setInterval = this.setInterval.bind(this)
         this.unsetInterval = this.unsetInterval.bind(this)
@@ -57,7 +60,7 @@ class Snapshot extends React.Component {
 
     fast() {
         this.setState(prevState => ({
-            speed_index: Math.min(prevState.speed_index + 1, prevState.speeds.length)
+            speed_index: Math.min(prevState.speed_index + 1, this.speeds.length)
         }))
         this.setInterval()
     }
@@ -69,7 +72,6 @@ class Snapshot extends React.Component {
         this.setInterval()
     }
 
-
     componentWillUnmount() {
         clearInterval(this.interval);
     }
@@ -78,7 +80,7 @@ class Snapshot extends React.Component {
         this.unsetInterval()
         this.interval = setInterval(
             () => this.updateSnapshotId(1),
-            1000 / this.state.speeds[this.state.speed_index]); //once every 1 second
+            1000 / this.speeds[this.state.speed_index]); //once every 1 second
 
     }
 
@@ -87,53 +89,70 @@ class Snapshot extends React.Component {
     }
 
     render() {
-        if (this.state.all_snapshots === [] ) {
+        if (!this.state.loaded) {
             return 'loading...';
         }
+
         return (
             <Card>
-                {this.state.speed_index}
                 <CardContent>
                     <Typography variant='h5'>Snapshot</Typography>
                     <Feelings userId={this.props.userId}/>
                     <SnapshotImages userId={this.props.userId} snapshotId={this.getSnapshotId()}/>
                     <Pose userId={this.props.userId} snapshotId={this.getSnapshotId()}/>
-                </CardContent>
-                <CardActions>
-                    <IconButton onClick={this.updateSnapshotId.bind(this, -1)}>
-                        <ChevronLeftIcon/>
-                    </IconButton>
-                    <IconButton onClick={this.updateSnapshotId.bind(this, 1)}>
-                        <ChevronRightIcon/>
-                    </IconButton>
-                    <IconButton onClick={this.setInterval}>
-                        <PlayCircleFilledIcon/>
-                    </IconButton>
-                    <IconButton onClick={this.slow}>
-                        <FastRewindIcon/>
-                    </IconButton>
-                    <IconButton onClick={this.fast}>
-                        <FastForwardIcon/>
-                    </IconButton>
+                    <Typography color="textSecondary">
+                        {moment(parseInt(this.state.all_snapshots[this.state.index].datetime)).format('HH:mm:ss.SSS')}
+                    </Typography>
 
-                    <IconButton onClick={this.unsetInterval}>
-                        <StopIcon/>
-                    </IconButton>
+                   </CardContent>
 
 
-                    <Button color="secondary" variant="contained" onClick={this.props.close}>Close</Button>
+                    <CardActions>
+                        <IconButton onClick={this.updateSnapshotId.bind(this, -1)}>
+                            <ChevronLeftIcon/>
+                        </IconButton>
+                        <IconButton onClick={this.updateSnapshotId.bind(this, 1)}>
+                            <ChevronRightIcon/>
+                        </IconButton>
+                        <IconButton onClick={this.setInterval}>
+                            <PlayCircleFilledIcon/>
+                        </IconButton>
+                        <IconButton onClick={this.slow}>
+                            <FastRewindIcon/>
+                        </IconButton>
+                        <IconButton onClick={this.fast}>
+                            <FastForwardIcon/>
+                        </IconButton>
 
-                </CardActions>
+                        <IconButton onClick={this.unsetInterval}>
+                            <StopIcon/>
+                        </IconButton>
+
+
+                        <Button color="secondary" variant="contained" onClick={this.props.close}>Close</Button>
+
+                    </CardActions>
 
             </Card>
-        )
+    );
     }
 
     componentDidMount() {
+
         fetch(`${window.apisrv}/users/${this.props.userId}/snapshots`)
             .then(response => response.json())
-            .then(data => this.setState({all_snapshots: data}));
+            .then(data => {
+                     {
+                        this.setState({
+                                all_snapshots: data,
+                                loaded: true
+                            }
+                        )
+                    }
+                }
+            )
     }
-}
 
-export default Snapshot;
+    }
+
+    export default Snapshot;

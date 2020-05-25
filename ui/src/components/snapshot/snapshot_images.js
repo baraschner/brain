@@ -1,7 +1,4 @@
 import React from 'react';
-import GridList from '@material-ui/core/GridList';
-import GridListTile from '@material-ui/core/GridListTile';
-import GridListTileBar from '@material-ui/core/GridListTileBar';
 
 
 class SnapshotImages extends React.Component {
@@ -21,24 +18,21 @@ class SnapshotImages extends React.Component {
     };
 
     render() {
-        if (this.props.snapshotId == null) {
+        if (this.props.snapshotId === null) {
             return 'loading...'
         }
 
         return (
-            <GridList>
-                <GridListTile>
-                    <GridListTileBar title="Color Image"/>
-                    <img width={200} height={200} alt="Color Image"
-                         src={`${window.apisrv}/users/${this.props.userId}/snapshots/${this.props.snapshotId}/colorImage/data`}/>
-                </GridListTile>
-                <GridListTile>
-                    <GridListTileBar title="Depth Image"/>
+            <div>
 
-                    <img width={200} height={200} alt="Depth Image"
-                         src={`${window.apisrv}/users/${this.props.userId}/snapshots/${this.props.snapshotId}/depthImage/data`}/>
-                </GridListTile>
-            </GridList>
+                <img width={300} height={300} alt="Color Image"
+                     src={`${window.apisrv}/users/${this.props.userId}/snapshots/${this.props.snapshotId}/colorImage/data`}/>
+
+
+                <img width={300} height={300} alt="Depth Image"
+                     src={`${window.apisrv}/users/${this.props.userId}/snapshots/${this.props.snapshotId}/depthImage/data`}/>
+
+            </div>
         );
 
     }

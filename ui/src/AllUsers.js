@@ -2,7 +2,6 @@ import React from 'react';
 import './App.css';
 import User from './components/user/user'
 import Snapshot from "./components/snapshot/snapshot";
-import {Backdrop, Fade, Modal} from "@material-ui/core";
 
 
 class AllUsers extends React.Component {
@@ -18,15 +17,6 @@ class AllUsers extends React.Component {
     };
 
 
-    render_users() {
-        const all_users = this.state.users.map((user) =>
-
-            <User userId={user.userId} onClick={this.display_snapshots.bind(this, user.userId)}/>
-        );
-        return <div>{all_users}</div>
-    }
-
-
     display_snapshots(user_id) {
         this.setState({displaySnapshot: true, displayUserId: user_id})
     }
@@ -40,20 +30,18 @@ class AllUsers extends React.Component {
         if (this.state.users == null) {
             return 'loading ...';
         }
+        let snapshot = null
+        if (this.state.displaySnapshot) {
+            snapshot = <Snapshot userId={this.state.displayUserId} close={this.close_snapshot}/>
+
+        }
         return (
             <React.Fragment>
                 {this.state.users.map((user) =>
-                    <User key={user.userId} userId={user.userId} onClick={this.display_snapshots.bind(this, user.userId)}/>)
+                    <User key={user.userId} userId={user.userId}
+                          onClick={this.display_snapshots.bind(this, user.userId)}/>)
                 }
-                <Modal open={this.state.displaySnapshot}
-                       onClose={this.close_snapshot}
-
-                       >
-
-                        <Snapshot userId={this.state.displayUserId} close={this.close_snapshot}/>
-
-
-                </Modal>
+                {snapshot}
             </React.Fragment>
         );
     }

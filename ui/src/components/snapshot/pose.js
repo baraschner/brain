@@ -27,7 +27,7 @@ class Pose extends React.Component {
     };
 
     componentDidUpdate(prevProps, prevState) {
-        if (prevProps.snapshotId != this.props.snapshotId) {
+        if (prevProps.snapshotId !== this.props.snapshotId) {
             this.fetch_data()
         }
     }

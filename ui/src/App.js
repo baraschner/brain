@@ -3,6 +3,7 @@ import './App.css';
 import AllUsers from './AllUsers.js'
 import AppBar from '@material-ui/core/AppBar';
 import ToolBar from '@material-ui/core/Toolbar';
+import BottomNavigation from '@material-ui/core/BottomNavigation';
 
 
 class App extends React.Component {
@@ -14,10 +15,13 @@ class App extends React.Component {
                 <AppBar position="static">
                     <ToolBar>
                         <img alt="" src="brain.png" width='45' height='45'/>
-                        Brain
+                        brain
                     </ToolBar>
                 </AppBar>
                 <AllUsers/>
+                <BottomNavigation>
+                    <p>Icons by <a href="https://icons8.com/">Icons8</a></p>
+                </BottomNavigation>
             </React.Fragment>
         );
     }
