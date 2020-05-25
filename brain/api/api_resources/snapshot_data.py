@@ -1,5 +1,5 @@
-from bson import ObjectId
 import flask
+from bson import ObjectId
 
 from brain.api.api_resources.base_resource import BaseResource
 from brain.utils import consts

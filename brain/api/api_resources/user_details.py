@@ -1,6 +1,5 @@
 from brain.api.api_resources.base_resource import BaseResource
 from brain.utils import consts
-from bson.json_util import dumps
 
 
 class UserInfo(BaseResource):
