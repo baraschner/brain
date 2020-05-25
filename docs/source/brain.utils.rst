@@ -20,6 +20,14 @@ brain.utils.consts module
    :undoc-members:
    :show-inheritance:
 
+brain.utils.context module
+--------------------------
+
+.. automodule:: brain.utils.context
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 brain.utils.flask\_tools module
 -------------------------------
 
@@ -36,26 +44,10 @@ brain.utils.json\_utils module
    :undoc-members:
    :show-inheritance:
 
-brain.utils.mongo\_connector module
------------------------------------
-
-.. automodule:: brain.utils.mongo_connector
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
 brain.utils.queue\_connector module
 -----------------------------------
 
 .. automodule:: brain.utils.queue_connector
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
-brain.utils.string\_utils module
---------------------------------
-
-.. automodule:: brain.utils.string_utils
    :members:
    :undoc-members:
    :show-inheritance:

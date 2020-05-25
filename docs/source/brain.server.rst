@@ -1,6 +1,14 @@
 brain.server package
 ====================
 
+Subpackages
+-----------
+
+.. toctree::
+   :maxdepth: 4
+
+   brain.server.processors
+
 Submodules
 ----------
 

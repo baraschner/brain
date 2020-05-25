@@ -5,8 +5,9 @@ Subpackages
 -----------
 
 .. toctree::
+   :maxdepth: 4
 
-   brain.client.parsers
+   brain.client.readers
 
 Submodules
 ----------
@@ -19,10 +20,10 @@ brain.client.client module
    :undoc-members:
    :show-inheritance:
 
-brain.client.reader module
---------------------------
+brain.client.client\_api module
+-------------------------------
 
-.. automodule:: brain.client.reader
+.. automodule:: brain.client.client_api
    :members:
    :undoc-members:
    :show-inheritance:

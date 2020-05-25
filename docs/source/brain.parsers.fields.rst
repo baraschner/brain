@@ -12,14 +12,6 @@ brain.parsers.fields.color\_image\_parser module
    :undoc-members:
    :show-inheritance:
 
-brain.parsers.fields.datetime\_parser module
---------------------------------------------
-
-.. automodule:: brain.parsers.fields.datetime_parser
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
 brain.parsers.fields.depth\_image\_parser module
 ------------------------------------------------
 
