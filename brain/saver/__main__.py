@@ -1,7 +1,7 @@
 import fire
 
-from .saver import Saver
 from brain.utils import consts
+from .saver import Saver
 
 
 def save(field, filename, database=consts.MONGODB_DEFAULT_URL):

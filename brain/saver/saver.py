@@ -8,8 +8,8 @@ from brain.utils import consts
 
 
 class Saver:
-
-    def get_db_info_from_url(self, db_url):
+    @classmethod
+    def get_db_info_from_url(cls, db_url):
         url_obj = furl.furl(db_url)
         db_type = url_obj.scheme
         if db_type != 'mongodb':
