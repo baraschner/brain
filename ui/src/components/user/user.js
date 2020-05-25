@@ -1,4 +1,5 @@
 import React from 'react';
+import moment from 'moment'
 import Card from '@material-ui/core/Card';
 import Box from '@material-ui/core/Box';
 import CardActions from '@material-ui/core/CardActions';
@@ -16,6 +17,13 @@ class User extends React.Component {
 
     }
 
+    render_gender(gender) {
+        if (gender === "MALE") {
+            return <img src="https://img.icons8.com/bubbles/50/000000/male.png"/>
+        }
+        return <img src="https://img.icons8.com/bubbles/50/000000/female.png"/>
+    }
+
     render() {
         if (this.state.user == null) {
             return 'loading...'
@@ -27,9 +35,9 @@ class User extends React.Component {
                         <Typography variant={'h6'}>
                             {this.state.user.username}
                         </Typography>
-                        <Typography>{this.state.user.userId}</Typography>
-                        <Typography>{this.state.user.gender}</Typography>
-                        {new Date(1000 * this.state.user.birthday).toDateString()}
+                        <Typography color="textSecondary">{this.state.user.userId}</Typography>
+                        <Typography>{this.render_gender(this.state.user.gender)}</Typography>
+                        <img src="https://img.icons8.com/bubbles/50/000000/birthday.png"/>{new Date(1000 * this.state.user.birthday).toDateString()}
                     </CardContent>
 
                     <CardActions>

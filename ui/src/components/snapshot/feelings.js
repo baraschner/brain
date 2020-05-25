@@ -44,11 +44,11 @@ class Feelings extends React.Component {
                 <Title>Feelings</Title>
                 <LineChart width={1000} height={300} data={this.state.feelings}>
                     <XAxis dataKey="time" domain={['auto', 'auto']}
-                           tickFormatter={(t) => moment(t).format('HH:mm:ss')}
+                           tickFormatter={(t) => moment(t).format('HH:mm:ss.SSS')}
                            type='number'/>
                     <YAxis/>
                     <Tooltip labelFormatter={(t) => {
-                        return moment(parseInt(t)).format('HH:mm:ss');
+                        return moment(parseInt(t)).format('HH:mm:ss.SSS');
                     }} />
                     <Legend/>
                     <Line type="monotone" dataKey="hunger" stroke="#ffcc66" dot={false} />
