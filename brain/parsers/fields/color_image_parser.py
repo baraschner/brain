@@ -1,7 +1,8 @@
 import base64
-import os
 import json
-from PIL import Image as PIL
+import os
+
+from PIL import Image
 
 
 def parse_color_image(data):
@@ -14,7 +15,7 @@ def parse_color_image(data):
     raw_data = d['data']
     size = d['width'], d['height']
 
-    image = PIL.new('RGB', size)
+    image = Image.new('RGB', size)
     decoded = base64.b64decode(raw_data)
     image.putdata([(decoded[i], decoded[i + 1], decoded[i + 2]) for i in range(0, len(decoded), 3)])
 

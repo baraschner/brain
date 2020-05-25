@@ -1,6 +1,7 @@
-import matplotlib.pyplot as plt
-import os
 import json
+import os
+
+import matplotlib.pyplot as plt
 import numpy as np
 
 
