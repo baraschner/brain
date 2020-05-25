@@ -1,14 +1,14 @@
 import json
 import logging
-from flask import Flask, request
-from flask_restful import Resource, Api
-from bson import BSON
 from datetime import datetime
 
+from bson import BSON
+from flask import Flask, request
+from flask_restful import Resource, Api
+
+from brain.parsers import Parser
 from brain.utils import build_queue_connection_from_url
 from brain.utils import consts, Context
-from brain.parsers import Parser
-
 from .processors import Processor
 
 
@@ -60,8 +60,7 @@ def run_server(host, port, queue_url, publish=None):
             date = datetime.fromtimestamp(int(data[consts.DATETIME]) / 1000)
             context = Context(base_save_path, user_id, date)
 
-            processor.process_data(data,context)
-
+            processor.process_data(data, context)
 
             if queue is not None:
                 queue.publish(consts.PARSER_INPUT_EXCHANGE_NAME, json.dumps(data))

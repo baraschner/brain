@@ -1,7 +1,7 @@
 import fire
 
-from .server import run_server
 from brain.utils import consts
+from .server import run_server
 
 
 def run_server_cli(host=consts.LOCALHOST, port=consts.SERVER_DEFAULT_PORT, queue=consts.RABBIT_DEFAULT_URL):
