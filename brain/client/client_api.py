@@ -12,5 +12,5 @@ def upload_sample(file, host=consts.SERVER_DEFAULT_HOST, port=consts.SERVER_DEFA
     :param file: path to the file that contains the sample
     :return:
     """
-    client = Client(host, port, file)
+    client = Client(host, port, file, test)
     client.upload()

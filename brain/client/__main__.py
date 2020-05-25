@@ -1,4 +1,5 @@
 import fire
+
 from .client_api import upload_sample
 
 if __name__ == '__main__':

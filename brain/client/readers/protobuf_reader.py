@@ -1,10 +1,10 @@
 import gzip
 import struct
 
-from brain.utils import Snapshot,User
+from brain.utils import Snapshot
 
 
-class ProtobufParser:
+class ProtobufReader:
     def __init__(self, file):
         self.file = file
         self.pos = 0
@@ -19,7 +19,7 @@ class ProtobufParser:
 
     def __iter__(self):
         with gzip.open(self.file, 'rb') as f:
-            while (True):
+            while True:
                 f.seek(self.pos)
                 message = Snapshot()
                 size = f.read(4)
