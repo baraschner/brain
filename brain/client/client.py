@@ -5,7 +5,7 @@ from bson import BSON
 from google.protobuf.json_format import MessageToDict
 
 from brain.client.readers import ProtobufReader
-from brain.utils import User, consts, filter_json
+from brain.utils import User, consts
 
 
 class Client:
@@ -42,7 +42,7 @@ class Client:
         :param snapshot: a dictionary that contains the snapshot to upload
         """
         snapshot_dict = MessageToDict(snapshot, including_default_value_fields=True)
-        filtered = filter_json(snapshot_dict, supported_fields)
+        filtered = {key: snapshot_dict[key] for key in supported_fields + ['datetime'] if key in snapshot_dict}
         snapshot_bson = BSON.encode({**user_dict, **filtered})
         self.__send_message('snapshot', snapshot_bson, 'POST')
 
