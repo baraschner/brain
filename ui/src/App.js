@@ -1,6 +1,7 @@
 import React from 'react';
 import './App.css';
 import AllUsers from './AllUsers.js'
+import logo from './brain.png';
 import AppBar from '@material-ui/core/AppBar';
 import ToolBar from '@material-ui/core/Toolbar';
 import BottomNavigation from '@material-ui/core/BottomNavigation';
@@ -14,7 +15,7 @@ class App extends React.Component {
             <React.Fragment>
                 <AppBar position="static">
                     <ToolBar>
-                        <img alt="" src="brain.png" width='45' height='45'/>
+                        <img alt="" src={logo} width='45' height='45'/>
                         brain
                     </ToolBar>
                 </AppBar>

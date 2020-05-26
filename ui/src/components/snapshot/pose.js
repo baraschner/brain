@@ -9,7 +9,6 @@ class Pose extends React.Component {
         this.state = {
             pose: null,
             loaded: false
-
         };
     }
 
@@ -21,9 +20,7 @@ class Pose extends React.Component {
     }
 
     componentDidMount() {
-
         this.fetch_data()
-
     };
 
     componentDidUpdate(prevProps, prevState) {
@@ -44,7 +41,7 @@ class Pose extends React.Component {
                     ({this.state.pose.translation.x},{this.state.pose.translation.y},{this.state.pose.translation.z})
                 </CardContent>
                 <CardContent><Typography>Translation</Typography>
-                    ({this.state.pose.rotation.x},{this.state.pose.rotation.y},{this.state.pose.rotation.z})
+                    ({this.state.pose.rotation.x},{this.state.pose.rotation.y},{this.state.pose.rotation.z},{this.state.pose.rotation.w})
                 </CardContent>
             </Card>
         );

@@ -15,6 +15,6 @@ def run_server(host, port, api_host, api_port):
 
     @app.route("/")
     def index():
-        return render_template("index.html", api_server=f"http://{api_host}:{api_port}")
+        return render_template("index.html", apisrv=f"http://{api_host}:{api_port}")
 
     app.run(host=host, port=port)
