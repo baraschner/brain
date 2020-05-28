@@ -9,14 +9,13 @@ from brain.utils import consts
 
 class Saver:
     @classmethod
-    def get_db_info_from_url(cls, db_url):
-        url_obj = furl.furl(db_url)
-        db_type = url_obj.scheme
+    def is_db_supported(cls, db_url):
+        db_type = furl.furl(db_url).scheme
         if db_type != 'mongodb':
             raise Exception('DB not Supported!')
 
     def __init__(self, database_url, queue_url=None):
-        self.get_db_info_from_url(database_url)
+        self.is_db_supported(database_url)
         self.client = MongoClient(database_url)
         if queue_url is not None:
             self.queue = build_queue_connection_from_url(queue_url)
