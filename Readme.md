@@ -18,7 +18,10 @@ The results are then exposed via a RESTful API, which is consumed by a CLI; ther
 # Deployment
 The project is deployable with docker. We assume that docker is already installed.
 To deploy the project (which deploys the server, parsers, api, ui) use
- ```./scripts/run-pipeline.sh```.
+ ```shell script
+./scripts/run-pipeline.sh
+```
+ There are two images created in the project: one for the UI and one for all the other components.
  
  # Project Components
  ## Client
@@ -55,7 +58,7 @@ python -m cortex.server run-server \
 ```
 127.0.0.1:8000 is the default address to which the server binds.
 
-##Parsers
+## Parsers
 The parsers are simple functions or classes, built on top of an aspect-oriented platform. They are easily deployable as microservices consuming raw data from the queue, and producing parsed results to it. The parsers have the following api and cli:
 ```python
 from brain.parsers import run_parser
@@ -81,7 +84,7 @@ The following parsers exist by default:
 - feelings
 - user
 
-##Database
+## Database
 The system uses MongoDB us the database.
 
 ## Saver
@@ -105,7 +108,7 @@ python -m cortex.saver run-saver  \
       --queue 'rabbitmq://127.0.0.1:5672/'
 ```
 
-##The API
+## API
 The API server consumes the database. It has the following endpoints:
 - ```/users```
 Returns the list of all the supported users, including their IDs and names only.
@@ -138,7 +141,7 @@ python -m cortex.api run-server \
       --database 'mongodb://127.0.0.1:5432'
 ```
 
-## The CLI
+## CLI
 The cli provides functions that consume the api. For example
 ```shell script
 python -m brain.cli get-users
@@ -149,7 +152,7 @@ python -m brain.cli get-result 1 2 'pose'
 ```
 One may get all available CLI functions using ```python -m brain.cli -h```.
 
-## The UI
+## UI
 The user interface server provides a GUI that allows navigation through the data in the snapshots in the system.
 The UI has two components.
 - A simple web server written using Flask.
