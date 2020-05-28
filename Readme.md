@@ -20,7 +20,7 @@ The project is deployable with docker. We assume that docker is already installe
 To deploy the project (which deploys the server, parsers, api, ui) use
  ```./scripts/run-pipeline.sh```.
  
- #Project Components
+ # Project Components
  ## Client
  The client is responsible for uploading snapshots to the server. The client exposes the following cli and api:
  ```python
