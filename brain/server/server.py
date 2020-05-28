@@ -12,7 +12,7 @@ from brain.utils import consts, Context
 from brain.utils.dumper import dump_binary_data
 
 
-def run_server(host, port, queue_url, publish=None):
+def run_server(host, port, queue_url, publish=None, base_save_path=consts.SAVE_PATH):
     """
     runs the server. the server can either publish to a queue or get a publish function
 
@@ -20,6 +20,8 @@ def run_server(host, port, queue_url, publish=None):
     :param port: port to bind
     :param queue_url: url of message queue
     :param publish: public function, None if using queue
+    :param base_save_path: base path to dump binary data
+
     :return:
     """
     app = Flask(__name__)
@@ -27,7 +29,6 @@ def run_server(host, port, queue_url, publish=None):
     app.logger = logger
     api = Api(app)
     supported_fields = get_supported_fields()
-    base_save_path = consts.SAVE_PATH
 
     if queue_url is not None:
         queue = build_queue_connection_from_url(queue_url)
@@ -59,7 +60,7 @@ def run_server(host, port, queue_url, publish=None):
             date = datetime.fromtimestamp(int(data[consts.DATETIME]) / 1000)
             context = Context(base_save_path, user_id, date)
 
-            dump_binary_data(data,context)
+            dump_binary_data(data, context)
 
             if queue is not None:
                 queue.publish(consts.PARSER_INPUT_EXCHANGE_NAME, json.dumps(data))
