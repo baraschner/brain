@@ -19,7 +19,8 @@ def parse_color_image(data):
     decoded = base64.b64decode(raw_data)
     image.putdata([(decoded[i], decoded[i + 1], decoded[i + 2]) for i in range(0, len(decoded), 3)])
 
-    save_path = path+'.jpg'
+    save_path = path + '.jpg'
+
     image.save(save_path)
 
     result = {'path': save_path, 'content-type': 'image/jpg'}
