@@ -11,13 +11,15 @@ from brain.server import run_server
 
 _SAMPLE_PATH = Path('tests/resources/sample.mind.gz').absolute()
 _SERVER_IP = '127.0.0.1'
-_SERVER_TEST_PORT = 4080
+_SERVER_TEST_PORT = 8000
+_EXPECTED_SUPPORTED = ['feelings', 'pose', 'user', 'depthImage', 'colorImage']
 
 
 @fixture()
-def server_fixture(publish):
-    func, path = publish
-    process = multiprocessing.Process(target=run_server, args=(_SERVER_IP, _SERVER_TEST_PORT, None, func,))
+def server_fixture(publish_fixture):
+    func, path = publish_fixture
+    process = multiprocessing.Process(target=run_server,
+                                      args=(_SERVER_IP, _SERVER_TEST_PORT, None, func, path.absolute(),))
     process.start()
     time.sleep(2)
     try:
@@ -27,7 +29,7 @@ def server_fixture(publish):
 
 
 @fixture()
-def publish(tmp_path):
+def publish_fixture(tmp_path):
     def on_message(m):
         with open(tmp_path / 'result', 'w') as f:
             f.write(m)
@@ -37,12 +39,11 @@ def publish(tmp_path):
 
 def test_config(server_fixture):
     result = json.loads(requests.get(f'http://{_SERVER_IP}:{_SERVER_TEST_PORT}/config').json())
-    assert 'feelings' in result['supported_fields']
+    assert all(k in result['supported_fields'] for k in _EXPECTED_SUPPORTED)
 
-'''
+
 def test_snapshot(server_fixture):
     upload_sample(_SAMPLE_PATH, _SERVER_IP, _SERVER_TEST_PORT)
     with open(server_fixture / 'result') as f:
         d = json.load(f)
     assert 'userId' in d and 'feelings' in d
-'''
