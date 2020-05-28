@@ -12,16 +12,17 @@ class AllUsers extends React.Component {
             displaySnapshot: false,
             displayUserId: null
         };
-        this.close_snapshot = this.close_snapshot.bind(this)
+        this.closeSnapshots = this.closeSnapshots.bind(this)
+        this.displaySnapshots= this.displaySnapshots.bind(this)
 
     };
 
 
-    display_snapshots(user_id) {
+    displaySnapshots(user_id) {
         this.setState({displaySnapshot: true, displayUserId: user_id})
     }
 
-    close_snapshot() {
+    closeSnapshots() {
         this.setState({displaySnapshot: false});
     }
 
@@ -32,14 +33,14 @@ class AllUsers extends React.Component {
         }
         let snapshot = null
         if (this.state.displaySnapshot) {
-            snapshot = <Snapshot userId={this.state.displayUserId} close={this.close_snapshot}/>
+            snapshot = <Snapshot userId={this.state.displayUserId} close={this.closeSnapshots}/>
 
         }
         return (
             <React.Fragment>
                 {this.state.users.map((user) =>
                     <User key={user.userId} userId={user.userId}
-                          onClick={this.display_snapshots.bind(this, user.userId)}/>)
+                          onClick={this.displaySnapshots.bind(this, user.userId)}/>)
                 }
                 {snapshot}
             </React.Fragment>

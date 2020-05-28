@@ -58,11 +58,11 @@ class Snapshot extends React.Component {
 
     }
 
-    fast() {
-        this.setState(prevState => ({
-            speed_index: Math.min(prevState.speed_index + 1, this.speeds.length)
-        }))
-        this.setInterval()
+    fastPlay() {
+                this.unsetInterval()
+        this.interval = setInterval(
+            () => this.updateSnapshotId(1),
+            1000 / this.speeds[this.state.speed_index]); //once every 1 second
     }
 
     slow() {
@@ -117,13 +117,9 @@ class Snapshot extends React.Component {
                         <IconButton onClick={this.setInterval}>
                             <PlayCircleFilledIcon/>
                         </IconButton>
-                        <IconButton onClick={this.slow}>
-                            <FastRewindIcon/>
-                        </IconButton>
-                        <IconButton onClick={this.fast}>
+                        <IconButton onClick={this.fastPlay}>
                             <FastForwardIcon/>
                         </IconButton>
-
                         <IconButton onClick={this.unsetInterval}>
                             <StopIcon/>
                         </IconButton>

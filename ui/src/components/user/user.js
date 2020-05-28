@@ -16,7 +16,7 @@ class User extends React.Component {
 
     }
 
-    render_gender(gender) {
+    renderGender(gender) {
         if (gender === "MALE") {
             return <img src="https://img.icons8.com/bubbles/50/000000/male.png"/>
         }
@@ -35,7 +35,7 @@ class User extends React.Component {
                             {this.state.user.username}
                         </Typography>
                         <Typography color="textSecondary">{this.state.user.userId}</Typography>
-                        <Typography>{this.render_gender(this.state.user.gender)}</Typography>
+                        <Typography>{this.renderGender(this.state.user.gender)}</Typography>
                         <img src="https://img.icons8.com/bubbles/50/000000/birthday.png"/>{new Date(1000 * this.state.user.birthday).toDateString()}
                     </CardContent>
 
