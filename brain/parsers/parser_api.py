@@ -1,6 +1,7 @@
 import json
 
-from .parser import Parser
+from .parser import QueueParser
+from .parser_factory import get_parser
 
 
 def parse(field, snapshot_file):
@@ -25,7 +26,7 @@ def run_parser(field, data):
     :param data: data to parse
     :return: result of parser
     """
-    return Parser(field).parser(data)
+    return get_parser(field)(data)
 
 
 def run_queue_parser(field, queue):
@@ -36,5 +37,5 @@ def run_queue_parser(field, queue):
     :param queue: url of message queue
     :return:
     """
-    parser = Parser(field)
-    parser.queue_parse(queue)
+    parser = QueueParser(get_parser(field), queue, field)
+    parser.queue_parse()
