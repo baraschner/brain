@@ -9,7 +9,7 @@ from flask_restful import Resource, Api
 from brain.parsers import get_supported_fields
 from brain.utils import build_queue_connection_from_url
 from brain.utils import consts, Context
-from .processors import Processor
+from brain.utils.dumper import dump_binary_data
 
 
 def run_server(host, port, queue_url, publish=None):
@@ -28,7 +28,6 @@ def run_server(host, port, queue_url, publish=None):
     api = Api(app)
     supported_fields = get_supported_fields()
     base_save_path = consts.SAVE_PATH
-    processor = Processor()
 
     if queue_url is not None:
         queue = build_queue_connection_from_url(queue_url)
@@ -60,7 +59,7 @@ def run_server(host, port, queue_url, publish=None):
             date = datetime.fromtimestamp(int(data[consts.DATETIME]) / 1000)
             context = Context(base_save_path, user_id, date)
 
-            processor.process_data(data, context)
+            dump_binary_data(data,context)
 
             if queue is not None:
                 queue.publish(consts.PARSER_INPUT_EXCHANGE_NAME, json.dumps(data))

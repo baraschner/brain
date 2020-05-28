@@ -11,7 +11,7 @@ _USER_ID = 1337
 _RESULT_PRINT = '42\n'
 _RESULT = 42
 
-'''
+
 def test_get_users(requests_mock, capsys):
     requests_mock.get(f'{_SERVER_URL}/users', json=dumps(_RESULT))
     get_users()
@@ -45,4 +45,4 @@ def test_result(requests_mock, capsys):
     get_result(_USER_ID, _SNAPSHOT_ID, _FIELD)
     captured = capsys.readouterr()
     assert captured.out == _RESULT_PRINT
-'''
+
