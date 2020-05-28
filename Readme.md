@@ -15,7 +15,7 @@ The results are then exposed via a RESTful API, which is consumed by a CLI; ther
 3. Activate the virtual environment.
 4. Run the tests by using  ```pytest```
 
-#Deployment
+# Deployment
 The project is deployable with docker. We assume that docker is already installed.
 To deploy the project (which deploys the server, parsers, api, ui) use
  ```./scripts/run-pipeline.sh```.
