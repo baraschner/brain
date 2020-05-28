@@ -54,7 +54,7 @@ run_server(host='127.0.0.1', port=8000, publish=print_message)
 python -m cortex.server run-server \
       --host '127.0.0.1'          \
       --port 8000                 \
-      'rabbitmq://127.0.0.1:5672/'
+      --queue 'rabbitmq://127.0.0.1:5672/'
 ```
 127.0.0.1:8000 is the default address to which the server binds.
 
@@ -97,14 +97,14 @@ saver.save('pose', data)
 ```
 ```shell script
 python -m cortex.saver save                     \
-      --database 'postgresql://127.0.0.1:5432' \
+      --database 'mongodb://127.0.0.1:' \
      'pose'                                       \
      'pose.result' 
 ```
 
 ```shell script
 python -m cortex.saver run-saver  \
-      --database 'mongodb://127.0.0.1:5432' \
+      --database 'mongodb://127.0.0.1:' \
       --queue 'rabbitmq://127.0.0.1:5672/'
 ```
 
@@ -123,15 +123,15 @@ Returns all the results in the field ``field_name`` over all snapshots of the gi
 Returns the specified snapshot's details: ID, datetime, and the available results' names only (e.g. pose).
 
 - ```/users/user-id/snapshots/snapshot-id/field-name```
-Returns the specified snapshot's result in a reasonable format. You should support pose, color-image, depth-image and feelings, where anything that has large binary data should contain metadata only, with its data being available via some dedicated URL (that should be mentioned in its metadata), like so:
-    - ```/users/user-id/snapshots/snapshot-id/colorImage/data``` 
+Returns the specified snapshot's result. Supports pose, colorImage, depthImage and feelings, where anything that has large binary data contains metadata only, with its data being available via the dedicated url
+```/users/user-id/snapshots/snapshot-id/colorImage/data``` 
 
 ```python
 from cortex.api import run_api_server
 run_api_server(
     host = '127.0.0.1',
     port = 5000,
-    database_url = 'postgresql://127.0.0.1:5432')
+    database_url = 'mongodb://127.0.0.1')
 ```
 
 ```shell script
