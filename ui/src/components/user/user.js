@@ -34,9 +34,14 @@ class User extends React.Component {
                         <Typography variant={'h6'}>
                             {this.state.user.username}
                         </Typography>
-                        <Typography color="textSecondary">{this.state.user.userId}</Typography>
+                        <Typography color="textSecondary">
+                            <img
+                                src="https://img.icons8.com/bubbles/50/000000/id-short-hair-girl.png"/>
+                            {this.state.user.userId}
+                        </Typography>
                         <Typography>{this.renderGender(this.state.user.gender)}</Typography>
-                        <img src="https://img.icons8.com/bubbles/50/000000/birthday.png"/>{new Date(1000 * this.state.user.birthday).toDateString()}
+                        <img
+                            src="https://img.icons8.com/bubbles/50/000000/birthday.png"/>{new Date(1000 * this.state.user.birthday).toDateString()}
                     </CardContent>
 
                     <CardActions>
