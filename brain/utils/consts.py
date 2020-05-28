@@ -25,3 +25,5 @@ DEPTH_IMAGE = 'depthImage'
 FEELINGS = 'feelings'
 SUPPORTED_FIELDS = 'supported_fields'
 SAVE_PATH = "/brain_data/snapshot_data"
+DUMP_FIELDS = ['colorImage', 'depthImage']
+

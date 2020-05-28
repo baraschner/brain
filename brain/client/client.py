@@ -54,7 +54,7 @@ class Client:
         hello_response = json.loads(self.__send_message('config').json())
         user = reader.read_object(User())
         user_dict = MessageToDict(user, including_default_value_fields=True)
-        user_dict[consts.USER_ID] = int(user_dict[consts.USER_ID])  # this is since protobuf doesn't preserver int64
+        user_dict[consts.USER_ID] = int(user_dict[consts.USER_ID])  # protobuf doesn't preserve int64
 
         supported_fields = hello_response['supported_fields']
         for snapshot in reader:
