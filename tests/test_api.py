@@ -13,12 +13,15 @@ _RESULT_PRINT = '42\n'
 _RESULT = 42
 
 
+'''
+@fixture(mongodb)
+
 @fixture
 def start_api_server():
     run_api_server(_SERVER_HOST, _SERVER_PORT, 'mongodb://127.0.0.1')
 
 
-'''
+
 def test_get_users(requests_mock, capsys):
     requests_mock.get(f'{_SERVER_URL}/users', json=dumps(_RESULT))
     get_users()
