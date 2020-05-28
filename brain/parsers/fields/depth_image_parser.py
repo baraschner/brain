@@ -10,13 +10,15 @@ def parse_depth_image(data):
     with open(path) as f:
         d = json.load(f)
 
-    depth_image = d['data']
     os.remove(path)
-    save_path = path + '.jpg'
 
+    depth_image = d['data']
     height = d['height']
     width = d['width']
     formatted_data = np.array(depth_image).reshape((height, width))
+
+    save_path = path + '.jpg'
+
     plt.imsave(save_path, formatted_data)
 
     result = {'path': save_path, 'content-type': 'image/jpg'}
