@@ -1,33 +1,42 @@
-from bson.json_util import loads
 from pathlib import Path
+# from bson.json_util import loads
+from bson import BSON
 from pytest import fixture
-
+import json
 from brain.client import upload_sample
 
 _SAMPLE_PATH = Path('tests/resources/sample.mind.gz').absolute()
+_SNAPSHOT_PATH = Path('tests/resources/snapshot.json').absolute()
+
 _HOST = '127.0.0.1'
-_PORT = 80
+_PORT = 8000
 _USER_EXPECTED = {'userId': 42, 'username': "Dan Gittik", 'birthday': 699746400, 'gender': "MALE"}
+_CONFIG = json.dumps({"supported_fields": ['pose', 'feelings']})
+_CONFIG_ALL = json.dumps({"supported_fields": ['pose', 'feelings','depthImage','colorImage']})
+
 
 
 @fixture()
-def config(requests_mock):
-    requests_mock.get(f"http://127.0.0.1/config", json={"supported_fields": ['pose', 'feelings']})
+def upload_fixture(requests_mock):
+    requests_mock.get(f"http://127.0.0.1:8000/config", json=_CONFIG)
+    requests_mock.post(f"http://127.0.0.1:8000/snapshot")
+    return requests_mock
 
 @fixture()
-def upload(requests_mock):
-    requests_mock.post(f"http://127.0.0.1/config")
+def upload_all_fixture(requests_mock):
+    requests_mock.get(f"http://127.0.0.1:8000/config", json=_CONFIG_ALL)
+    requests_mock.post(f"http://127.0.0.1:8000/snapshot")
+    return requests_mock
 
-
-def test_config(config):
+def test_config(upload_fixture):
     upload_sample(_SAMPLE_PATH, _HOST, _PORT, test=True)
-    data = config.last_request.body
+    data = BSON.decode(upload_fixture.last_request.body)
     assert 'pose' in data and 'feelings' in data and 'depthImage' not in data
 
-def test_upload(upload):
+
+def test_upload(upload_all_fixture):
     upload_sample(_SAMPLE_PATH, _HOST, _PORT, test=True)
-    data = config.last_request.body
-    assert data['user'] == _USER_EXPECTED
-
-
-
+    data = BSON.decode(upload_all_fixture.last_request.body)
+    with open(_SNAPSHOT_PATH,'r') as f:
+        snapshot = json.load(f)
+    assert snapshot == data
