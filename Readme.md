@@ -7,6 +7,8 @@ Brain Computer Interface
 The  project includes a client, which streams cognition snapshots to a server, which then publishes them to a message queue, where multiple parsers read the snapshot, parse various parts of it, and publish the parsed results, which are then saved to a database.
 The results are then exposed via a RESTful API, which is consumed by a CLI; there's also a GUI, which visualizes the results in various ways.
 
+![Project Drawing](./scheme.png)
+
 # Install
 1. Clone the repository.
 2. Run ``` ./scripts/install.sh ```
