@@ -19,6 +19,7 @@ def run_api_server(host, port, database_url):
 
     # automatically initializes api from api_resources
     flask_tools.api_driver(Api(app), __file__, (MongoClient(database_url),))
+
     CORS(app)
 
     app.run(host=host, port=port)
