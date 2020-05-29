@@ -2,10 +2,8 @@ import json
 
 import requests
 from bson import BSON
-from google.protobuf.json_format import MessageToDict
 
 from brain.client.readers import ProtobufReader
-from brain.utils import User, consts
 
 
 class Client:
@@ -34,18 +32,14 @@ class Client:
         else:
             return http_response
 
-    def _send_snapshot(self, user_dict, snapshot, supported_fields):
+    def _send_snapshot(self, user, snapshot):
         """
         upload a single snapshot to the server
 
-        :param user_dict: a dictionary that contains the user information
+        :param user: a dictionary that contains the user information
         :param snapshot: a dictionary that contains the snapshot to upload
         """
-        snapshot_dict = MessageToDict(snapshot, including_default_value_fields=True)
-        snapshot_dict['datetime'] = int(snapshot_dict['datetime'])
-
-        filtered = {key: snapshot_dict[key] for key in supported_fields + ['datetime'] if key in snapshot_dict}
-        snapshot_bson = BSON.encode({**user_dict, **filtered})
+        snapshot_bson = BSON.encode({**user, **snapshot})
         self.__send_message('snapshot', snapshot_bson, 'POST')
 
     def upload(self):
@@ -54,12 +48,11 @@ class Client:
         """
         reader = ProtobufReader(self.file)
         hello_response = json.loads(self.__send_message('config').json())
-        user = reader.read_object(User())
-        user_dict = MessageToDict(user, including_default_value_fields=True)
-        user_dict[consts.USER_ID] = int(user_dict[consts.USER_ID])  # protobuf doesn't preserve int64
 
-        supported_fields = hello_response['supported_fields']
+        reader.set_supported_fields(hello_response['supported_fields'])
+        user_dict = reader.read_user()
+
         for snapshot in reader:
-            self._send_snapshot(user_dict, snapshot, supported_fields)
+            self._send_snapshot(user_dict, snapshot)
             if self.test:  # in testing, send just a single snapshot
                 break
