@@ -9,7 +9,9 @@ from pytest import fixture
 from brain.client import upload_sample
 from brain.server import run_server
 
-_SAMPLE_PATH = Path('tests/resources/sample.mind.gz').absolute()
+RESOURCES = Path(__file__).parent / 'resources'
+
+_SAMPLE_PATH = RESOURCES / 'sample.mind.gz'
 _SERVER_IP = '127.0.0.1'
 _SERVER_TEST_PORT = 8000
 _EXPECTED_SUPPORTED = ['feelings', 'pose', 'user', 'depthImage', 'colorImage']

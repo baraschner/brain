@@ -1,14 +1,14 @@
 import json
 from pathlib import Path
 
-# from bson.json_util import loads
 from bson import BSON
 from pytest import fixture
 
 from brain.client import upload_sample
 
-_SAMPLE_PATH = Path('tests/resources/sample.mind.gz').absolute()
-_SNAPSHOT_PATH = Path('tests/resources/snapshot.json').absolute()
+RESOURCES = Path(__file__).parent / 'resources'
+_SAMPLE_PATH = RESOURCES / 'sample.mind.gz'
+_SNAPSHOT_PATH = RESOURCES / 'snapshot.json'
 
 _HOST = '127.0.0.1'
 _PORT = 8000
