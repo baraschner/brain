@@ -36,7 +36,7 @@ class ProtobufReader:
 
     def __iter__(self):
         """
-        Allows iteration over all snapshot.
+        Allows iteration over all snapshots.
         Each snapshot is a dict containing the supported fields
         :return:
         """
