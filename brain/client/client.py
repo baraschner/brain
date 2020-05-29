@@ -5,10 +5,9 @@ from brain.client.readers import ProtobufReader
 
 
 class Client:
-    def __init__(self, host, port, file, test=None):
+    def __init__(self, host, port, file):
         self.file = file
         self.address = f'{host}:{port}'
-        self.test = test
 
     def __send_message(self, url, message=None, method='GET'):
         """
@@ -22,13 +21,8 @@ class Client:
 
         if method == 'GET':
 
-            if self.test is not None:  # Client is being used as testing client
-                return self.test.get(url)
-
             http_response = requests.get(url)
         else:
-            if self.test is not None:  # Client is being used as testing client
-                return self.test.post(url, data=message)
 
             http_response = requests.post(url, data=message)
 
@@ -59,5 +53,3 @@ class Client:
 
         for snapshot in reader:
             self._send_snapshot(user_dict, snapshot)
-            if self.test is not None:  # in testing, send just a single snapshot
-                break
