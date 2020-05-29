@@ -127,7 +127,7 @@ Returns the specified snapshot's result. Supports pose, colorImage, depthImage a
 ```/users/user-id/snapshots/snapshot-id/colorImage/data``` 
 
 ```python
-from cortex.api import run_api_server
+from brain.api import run_api_server
 run_api_server(
     host = '127.0.0.1',
     port = 5000,
@@ -135,7 +135,7 @@ run_api_server(
 ```
 
 ```shell script
-python -m cortex.api run-server \
+python -m brain.api run-server \
       --host '127.0.0.1'       \
       --port 5000              \
       --database 'mongodb://127.0.0.1:5432'
@@ -171,7 +171,7 @@ run_server(
 ```
 
 ```shell script
-python -m cortex.gui run-server 
+python -m brain.ui run-server 
       --host '127.0.0.1'       
       --port 8080              
       --api '127.0.0.1:5000'   
