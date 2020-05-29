@@ -31,11 +31,11 @@
     }
   },
     "depthImage": {
-      "path": "/brain_data/snapshot_data/42/2019-12-04 08:08:07.339000/depthImage.jpg",
+      "path": "tests/parsers/resources/depthImage.expected",
       "content-type": "image/jpg"
     },
     "colorImage": {
-      "path": "/brain_data/snapshot_data/42/2019-12-04 08:08:07.339000/colorImage.jpg",
+      "path": "tests/parsers/resources/colorImage.expected",
       "content-type": "image/jpg"
     }
   }

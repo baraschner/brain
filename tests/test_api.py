@@ -1,58 +1,66 @@
+import multiprocessing
+import time
+from pathlib import Path
+
 from pytest import fixture
 
 from brain.api import run_api_server
+from brain.cli import *
 
 _SERVER_HOST = "127.0.0.1"
 _SERVER_PORT = 5000
-_SERVER_URL = "http://127.0.0.1:5000"
-_DB_URL = 'mongodb://127.0.0.1:5000'
-_SNAPSHOT_ID = "ID"
-_FIELD = "FIELD"
-_USER_ID = 1337
-_RESULT_PRINT = '42\n'
-_RESULT = 42
+_DEPTHIMAGE_PATH = Path(__file__).parent / 'parsers' / 'resources' / 'depthImage.expected'
+_USERID = 42
+_SNAPSHOT_ID = "5ed10b5776f0aa9affa9e3f0"
 
 
-'''
-@fixture(mongodb)
-
-@fixture
-def start_api_server():
-    run_api_server(_SERVER_HOST, _SERVER_PORT, 'mongodb://127.0.0.1')
-
-
-
-def test_get_users(requests_mock, capsys):
-    requests_mock.get(f'{_SERVER_URL}/users', json=dumps(_RESULT))
-    get_users()
-    captured = capsys.readouterr()
-    assert captured.out == _RESULT_PRINT
+@fixture(autouse=True)
+def api_fixture(mongodb):
+    process = multiprocessing.Process(target=run_api_server,
+                                      args=(_SERVER_HOST, _SERVER_PORT, None, mongodb,))
+    process.start()
+    time.sleep(2)
+    try:
+        yield
+    finally:
+        process.kill()
 
 
-def test_get_user(requests_mock, capsys):
-    requests_mock.get(f'{_SERVER_URL}/users/{_USER_ID}', json=dumps(_RESULT))
-    get_user(_USER_ID)
-    captured = capsys.readouterr()
-    assert captured.out == _RESULT_PRINT
+@fixture()
+def binary_data():
+    with open(_DEPTHIMAGE_PATH, 'rb') as f:
+        return f.read()
 
 
-def test_get_snapshots(requests_mock, capsys):
-    requests_mock.get(f'{_SERVER_URL}/users/{_USER_ID}/snapshots', json=dumps(_RESULT))
-    get_snapshots(_USER_ID)
-    captured = capsys.readouterr()
-    assert captured.out == _RESULT_PRINT
+def test_get_users():
+    result = requests.get(f'http://{_SERVER_HOST}:{_SERVER_PORT}/users').json()
+    assert result == [{'username': 'Dan Gittik', 'userId': 42}]
 
 
-def test_get_snapshot(requests_mock, capsys):
-    requests_mock.get(f'{_SERVER_URL}/users/{_USER_ID}/snapshots/{_SNAPSHOT_ID}', json=dumps(_RESULT))
-    get_snapshot(_USER_ID, _SNAPSHOT_ID)
-    captured = capsys.readouterr()
-    assert captured.out == _RESULT_PRINT
+def test_get_user():
+    result = requests.get(f'http://{_SERVER_HOST}:{_SERVER_PORT}/users/{_USERID}').json()
+    assert result == {'userId': 42, 'birthday': 699746400, 'gender': 'MALE', 'username': 'Dan Gittik'}
 
 
-def test_result(requests_mock, capsys):
-    requests_mock.get(f'{_SERVER_URL}/users/{_USER_ID}/snapshots/{_SNAPSHOT_ID}/{_FIELD}', json=dumps(42))
-    get_result(_USER_ID, _SNAPSHOT_ID, _FIELD)
-    captured = capsys.readouterr()
-    assert captured.out == _RESULT_PRINT
-'''
+def test_get_snapshots():
+    result = requests.get(f'http://{_SERVER_HOST}:{_SERVER_PORT}/users/{_USERID}/snapshots').json()
+    assert result == [{'datetime': 1575446887339, 'id': '5ed10b5776f0aa9affa9e3f0'}]
+
+
+def test_get_snapshot():
+    result = requests.get(f'http://{_SERVER_HOST}:{_SERVER_PORT}/users/{_USERID}/snapshots/{_SNAPSHOT_ID}').json()
+    assert result == {'id': '5ed10b5776f0aa9affa9e3f0', 'datetime': 1575446887339,
+                      'available fields': ['feelings', 'user', 'pose', 'depthImage', 'colorImage']}
+
+
+def test_get_field():
+    get_result(42, _SNAPSHOT_ID, 'feelings', _SERVER_HOST, _SERVER_PORT)
+    result = requests.get(
+        f'http://{_SERVER_HOST}:{_SERVER_PORT}/users/{_USERID}/snapshots/{_SNAPSHOT_ID}/feelings').json()
+    assert result == {'hunger': 0.0, 'thirst': 0.0, 'exhaustion': 0.0, 'happiness': 0.0}
+
+
+def test_get_binary_field(binary_data):
+    result = requests.get(f'http://{_SERVER_HOST}:{_SERVER_PORT}'
+                          f'/users/{_USERID}/snapshots/{_SNAPSHOT_ID}/depthImage/data').content
+    assert binary_data == result
