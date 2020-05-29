@@ -8,9 +8,11 @@ from brain.parsers import run_parser
 from brain.utils import Context
 from brain.utils import consts, dumper
 
-_PARSE_RESULT_BASE = Path('tests/parsers/resources')
+RESOURCES = Path(__file__).parent.parent / 'resources'
+
+_PARSE_RESULT_BASE = Path(__file__).parent / 'resources'
 _PARSE_QUEUE_RESULT = None
-_PARSE_DATA = Path('tests/resources/snapshot.json').absolute()
+_PARSE_DATA = RESOURCES / 'snapshot.json'
 
 _SIMPLE_FIELDS = ['feelings', 'pose', 'user']
 
