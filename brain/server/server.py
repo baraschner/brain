@@ -12,10 +12,12 @@ from brain.utils import consts, Context
 from brain.utils.dumper import dump_binary_data
 
 
-def run_server(host, port, queue_url, publish=None, base_save_path=consts.SAVE_PATH):
+def run_server(host=consts.SERVER_DEFAULT_HOST, port=consts.SERVER_DEFAULT_PORT,
+               queue_url=None, publish=None, base_save_path=consts.SAVE_PATH, test=False):
     """
     runs the server. the server can either publish to a queue or get a publish function
 
+    :param test: testing configuration in which the app is returned and not run.
     :param host: ip to bind
     :param port: port to bind
     :param queue_url: url of message queue
@@ -43,7 +45,7 @@ def run_server(host, port, queue_url, publish=None, base_save_path=consts.SAVE_P
         """
 
         def get(self):
-            return json.dumps({consts.SUPPORTED_FIELDS: supported_fields})
+            return {consts.SUPPORTED_FIELDS: supported_fields}
 
     @api.resource('/snapshot')
     class Snapshot(Resource):
@@ -67,4 +69,6 @@ def run_server(host, port, queue_url, publish=None, base_save_path=consts.SAVE_P
             else:
                 publish(json.dumps(data))
 
+    if (test):
+        return app
     app.run(host=host, port=port)

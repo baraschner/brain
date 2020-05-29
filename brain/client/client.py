@@ -1,5 +1,3 @@
-import json
-
 import requests
 from bson import BSON
 
@@ -7,7 +5,7 @@ from brain.client.readers import ProtobufReader
 
 
 class Client:
-    def __init__(self, host, port, file, test):
+    def __init__(self, host, port, file, test=None):
         self.file = file
         self.address = f'{host}:{port}'
         self.test = test
@@ -20,11 +18,18 @@ class Client:
         :param message: message to send, in case using post
         :param method: http method, default is get
         """
-        url = f'http://{self.address}/{url}'
+        url = f'http://{self.address}{url}'
 
         if method == 'GET':
+
+            if self.test is not None:  # Client is being used as testing client
+                return self.test.get(url)
+
             http_response = requests.get(url)
         else:
+            if self.test is not None:  # Client is being used as testing client
+                return self.test.post(url, data=message)
+
             http_response = requests.post(url, data=message)
 
         if http_response.status_code != 200:
@@ -40,19 +45,19 @@ class Client:
         :param snapshot: a dictionary that contains the snapshot to upload
         """
         snapshot_bson = BSON.encode({**user, **snapshot})
-        self.__send_message('snapshot', snapshot_bson, 'POST')
+        self.__send_message('/snapshot', snapshot_bson, 'POST')
 
     def upload(self):
         """
         Upload the entire sample file to the server
         """
         reader = ProtobufReader(self.file)
-        hello_response = json.loads(self.__send_message('config').json())
+        hello_response = self.__send_message('/config').json()
 
         reader.set_supported_fields(hello_response['supported_fields'])
         user_dict = reader.read_user()
 
         for snapshot in reader:
             self._send_snapshot(user_dict, snapshot)
-            if self.test:  # in testing, send just a single snapshot
+            if self.test is not None:  # in testing, send just a single snapshot
                 break
