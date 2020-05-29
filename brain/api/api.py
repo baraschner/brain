@@ -3,10 +3,10 @@ from flask_cors import CORS
 from flask_restful import Api
 from pymongo import MongoClient
 
-from brain.utils import flask_tools,consts
+from brain.utils import flask_tools, consts
 
 
-def run_api_server(host, port, database_url,test_db=None):
+def run_api_server(host, port, database_url, test_db=None):
     """
     Runs the api server
 

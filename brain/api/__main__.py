@@ -12,7 +12,7 @@ def run_server(host=consts.LOCALHOST, port=consts.DEFAULT_API_PORT, database=con
     :param database: database from which we'll get the data
     :return:
     """
-    run_api_server(host, port, database)
+    run_api_server(host, port, database, None)
 
 
 if __name__ == '__main__':
