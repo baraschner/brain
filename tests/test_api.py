@@ -60,7 +60,3 @@ def test_get_field():
     assert result == {'hunger': 0.0, 'thirst': 0.0, 'exhaustion': 0.0, 'happiness': 0.0}
 
 
-def test_get_binary_field(binary_data):
-    result = requests.get(f'http://{_SERVER_HOST}:{_SERVER_PORT}'
-                          f'/users/{_USERID}/snapshots/{_SNAPSHOT_ID}/depthImage/data').content
-    assert binary_data == result
