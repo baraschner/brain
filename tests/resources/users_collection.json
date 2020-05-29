@@ -1,9 +1,0 @@
-{
-  "_id": {
-    "$oid": "5ed10b5776f0aa9affa9e3f2"
-  },
-  "userId": 42,
-  "birthday": 699746400,
-  "gender": "MALE",
-  "username": "Dan Gittik"
-}
