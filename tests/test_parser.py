@@ -23,17 +23,12 @@ def data():
         return json.load(f)
 
 
-@fixture()
-def context_fixture(tmp_path):
-    context = Context(tmp_path, 0, 0)  # Don't care about datetime and user_id here
-    return context, tmp_path
-
 
 @fixture()
-def dumper_fixture(data, context_fixture):
-    context, path = context_fixture
+def dumper_fixture(data, tmp_path):
+    context = Context(tmp_path, 0, 0)
     dumper.dump_binary_data(data, context)
-    return data, context, path
+    return data, context, tmp_path
 
 
 @mark.parametrize("field", _SIMPLE_FIELDS)
