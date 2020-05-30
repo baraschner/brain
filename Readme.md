@@ -44,13 +44,11 @@ The default host is 127.0.0.1 and the default port is 8000.
 from brain.server import run_server
 def print_message(message):
     print(message)
+
 run_server(host='127.0.0.1', port=8000, publish=print_message)
 ```
 ```shell script
-python -m cortex.server run-server \
-      --host '127.0.0.1'          \
-      --port 8000                 \
-      --queue 'rabbitmq://127.0.0.1:5672/'
+python -m cortex.server run-server  --host '127.0.0.1' --port 8000 --queue 'rabbitmq://127.0.0.1:5672'
 ```
 127.0.0.1:8000 is the default address to which the server binds.
 
@@ -81,7 +79,7 @@ The following parsers exist by default:
 - user
 
 ## Database
-The system uses MongoDB us the database.
+The system uses MongoDB as the database.
 
 ## Saver
 The saver saves parsed results to the MongoDB database. The saver exposes the following cli and api:
@@ -92,10 +90,7 @@ data = …
 saver.save('pose', data)
 ```
 ```shell script
-python -m cortex.saver save                     
-      --database 'mongodb://127.0.0.1:' 
-     'pose'           q                            
-     'pose.result' 
+python -m cortex.saver save 'pose' 'pose.result' --database 'mongodb://127.0.0.1:'
 ```
 
 ```shell script
@@ -125,7 +120,7 @@ Returns the specified snapshot's result. Supports pose, colorImage, depthImage a
 ```python
 from brain.api import run_api_server
 run_api_server(
-    host = '127.0.0.1',
+    host = '127.0.0.1', 
     port = 5000,
     database_url = 'mongodb://127.0.0.1')
 ```
