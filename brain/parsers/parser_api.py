@@ -14,9 +14,9 @@ def parse(field, snapshot_file):
     :return:
     """
     with open(snapshot_file) as f:
-        data = f.read()
+        data = json.load(f)
 
-    print(run_parser(field, json.loads(data)))
+    print(run_parser(field, data))
 
 
 def run_parser(field, data):
