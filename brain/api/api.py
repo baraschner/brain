@@ -25,6 +25,7 @@ def run_api_server(host, port, database_url=None, db=None, test=False):
 
     # automatically initializes api from api_resources
     flask_tools.api_driver(Api(app), __file__, (db,))
+
     if test:
         return app
 

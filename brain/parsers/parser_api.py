@@ -1,7 +1,8 @@
 import json
 
-from .parser import QueueParser
+from brain.utils import consts
 from .parser_factory import get_parser
+from .queueparser import QueueParser
 
 
 def parse(field, snapshot_file):
@@ -29,7 +30,7 @@ def run_parser(field, data):
     return get_parser(field)(data)
 
 
-def run_queue_parser(field, queue):
+def run_queue_parser(field, queue=consts.RABBIT_DEFAULT_URL):
     """
     run parser as server that consumes a queue.
 
