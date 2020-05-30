@@ -1,12 +1,24 @@
+from pathlib import Path
+
 import requests
 from bson import BSON
 
 from brain.client.readers import ProtobufReader
 
 
+def _check_file(file):
+    path = Path(file)
+    if len(path.suffixes) != 2:
+        return False
+    return path.suffixes[0] == '.mind' and path.suffixes[1] == '.gz'
+
+
 class Client:
     def __init__(self, host, port, file):
-        self.file = file
+        if not _check_file(file):
+            raise Exception("File Type Not Supported")
+        self.reader = ProtobufReader(file)
+
         self.address = f'{host}:{port}'
 
     def __send_message(self, url, message=None, method='GET'):
@@ -45,11 +57,10 @@ class Client:
         """
         Upload the entire sample file to the server
         """
-        reader = ProtobufReader(self.file)
         hello_response = self.__send_message('/config').json()
 
-        reader.set_supported_fields(hello_response['supported_fields'])
-        user_dict = reader.read_user()
+        self.reader.set_supported_fields(hello_response['supported_fields'])
+        user_dict = self.reader.read_user()
 
-        for snapshot in reader:
+        for snapshot in self.reader:
             self._send_snapshot(user_dict, snapshot)
