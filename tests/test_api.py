@@ -6,7 +6,7 @@ from brain.api import run_api_server
 
 _SERVER_HOST = "127.0.0.1"
 _SERVER_PORT = 5000
-_DEPTHIMAGE_PATH = Path(__file__).parent / 'parsers' / 'resources' / 'depthImage.expected'
+_DEPTHIMAGE_PATH = Path(__file__).parent / 'resources' / 'parser_resources' / 'depthImage.expected'
 _USERID = 42
 _SNAPSHOT_ID = "5ed10b5776f0aa9affa9e3f0"
 
