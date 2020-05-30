@@ -8,5 +8,5 @@ setup(
     packages=find_packages(),
     install_requires=['pymongo', 'flask_restful', 'flask-cors', 'fire', 'requests', 'protobuf', 'numpy', 'matplotlib',
                       'furl', 'Pillow', 'pika'],
-    tests_require=['pytest', 'pytest-cov', 'mongomock'],
+    tests_require=['pytest', 'pytest-cov', 'mongomock', 'codecov', 'requests-mock'],
 )
