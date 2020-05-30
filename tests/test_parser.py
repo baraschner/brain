@@ -23,7 +23,6 @@ def data():
         return json.load(f)
 
 
-
 @fixture()
 def dumper_fixture(data, tmp_path):
     context = Context(tmp_path, 0, 0)
