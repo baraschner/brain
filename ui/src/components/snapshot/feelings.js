@@ -48,7 +48,7 @@ class Feelings extends React.Component {
                            type='number'/>
                     <YAxis/>
                     <Tooltip labelFormatter={(t) => {
-                        return moment(parseInt(t)).format('HH:mm:ss.SSS');
+                        return moment(t).format('HH:mm:ss.SSS');
                     }} />
                     <Legend/>
                     <Line type="monotone" dataKey="hunger" stroke="#ffcc66" dot={false} />

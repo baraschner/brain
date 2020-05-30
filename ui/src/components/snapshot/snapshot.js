@@ -99,7 +99,7 @@ class Snapshot extends React.Component {
                     <SnapshotImages userId={this.props.userId} snapshotId={this.getSnapshotId()}/>
                     <Pose userId={this.props.userId} snapshotId={this.getSnapshotId()}/>
                     <Typography color="textSecondary">
-                        {moment(parseInt(this.state.all_snapshots[this.state.index].datetime)).format('HH:mm:ss.SSS')}
+                        {moment(this.state.all_snapshots[this.state.index].datetime).format('HH:mm:ss.SSS')}
                     </Typography>
 
                 </CardContent>
