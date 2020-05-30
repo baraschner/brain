@@ -29,13 +29,10 @@ To deploy the project (which deploys the server, parsers, api, ui) use
  ```python
 from brain.client import upload_sample
 
-upload_sample(file,host,port,test)
+upload_sample('snapshot.mind.gz','127.0.0.1','8000')
 ```
 ```shell script
-python -m cortex.client upload-sample \
-      --host '127.0.0.1'             \
-      --port 8000                    \
-      'snapshot.mind.gz'
+python -m brain.client upload-sample 'snapshot.mind.gz' --host '127.0.0.1' --port 8000                    
 ```
 The default host is 127.0.0.1 and the default port is 8000.
  
@@ -45,7 +42,7 @@ The default host is 127.0.0.1 and the default port is 8000.
  The server is responsible for receiving snapshots from the client the pass them to the queue.
  The server exposes the following cli and api:
   ```python
-from cortex.server import run_server
+from brain.server import run_server
 def print_message(message):
     print(message)
 run_server(host='127.0.0.1', port=8000, publish=print_message)
@@ -96,9 +93,9 @@ data = …
 saver.save('pose', data)
 ```
 ```shell script
-python -m cortex.saver save                     \
-      --database 'mongodb://127.0.0.1:' \
-     'pose'                                       \
+python -m cortex.saver save                     
+      --database 'mongodb://127.0.0.1:' 
+     'pose'           q                            
      'pose.result' 
 ```
 
@@ -150,7 +147,7 @@ python -m brain.cli get-snapshots 1
 python -m brain.cli get-snapshot 1 2
 python -m brain.cli get-result 1 2 'pose'
 ```
-One may get all available CLI functions using ```python -m brain.cli -h```.
+One may get all available CLI functions using ```python -m brain.cli --help```.
 
 ## UI
 The user interface server provides a GUI that allows navigation through the data in the snapshots in the system.
@@ -162,11 +159,11 @@ By design, in order to make the UI efficient the one's that consume the API are
  actually the clients.
  The UI server has the following api and cli:
  ```python
-from brain.ui import run_server
-run_server(
+from brain.ui import run_ui_server
+run_ui_server(
     host = '127.0.0.1',
     port = 8080,
-    api = "127.0.0.1:5000"
+    api = "http://127.0.0.1:5000"
 ... )
 ```
 
@@ -174,9 +171,11 @@ run_server(
 python -m brain.ui run-server 
       --host '127.0.0.1'       
       --port 8080              
-      --api '127.0.0.1:5000'   
+      --api 'http://127.0.0.1:5000'   
 ```
 The reason the UI has to know the api address is in order to plant it in the template.
-Then the clients will consume it.
+
+Note that by default the api default address of 127.0.0.1 means that the UI will only work on the local machine. 
+To make it accessible change the api IP to the external IP of your machine.
 
 
